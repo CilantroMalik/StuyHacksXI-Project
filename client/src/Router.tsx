@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { SignIn } from './features/signin/SignIn';
-import { SignUp } from './features/signup/SignUp';
+import { Profile } from './features/profile/Profile';
 
 function Router() {
   return (
@@ -14,8 +14,9 @@ function Router() {
         * otherwise take the user to their dashboard
         */}
       </Route>
-      <Route path="/signin" element={<SignIn/>}/>
-      <Route path="/signup" element={<SignUp />}/>
+      <Route path="/signin" element={<SignIn signUp={false}/>}/>
+      <Route path="/signup" element={<SignIn signUp={true} />}/>
+      <Route path="/home" element={<Profile />}/>
     </Routes>
   );
 }
