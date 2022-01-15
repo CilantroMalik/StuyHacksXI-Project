@@ -9,6 +9,7 @@ export function Left() {
 
   const leftStyles: CSSProperties = {
     flex: 0.4,
+    maxWidth: 700,
     backgroundColor: "#1A1847",
     padding: 40,
     display: 'flex',
