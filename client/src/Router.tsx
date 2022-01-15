@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { SignIn } from './features/signin/SignIn';
 import { Profile } from './features/profile/Profile';
+import { AddBook } from './features/addBook/AddBook';
 
 function Router() {
   return (
@@ -17,6 +18,7 @@ function Router() {
       <Route path="/signin" element={<SignIn signUp={false}/>}/>
       <Route path="/signup" element={<SignIn signUp={true} />}/>
       <Route path="/home" element={<Profile />}/>
+      <Route path="/addBook" element={<AddBook />}/>
     </Routes>
   );
 }
