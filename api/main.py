@@ -10,6 +10,7 @@ from flask import Flask, request, jsonify
 from flask_cors import cross_origin, CORS
 from uuid import uuid1
 import json
+from random import randint
 import setup
 
 app = Flask(__name__)
@@ -44,7 +45,7 @@ def register():
     #     books = json.load(bookFile)
     #     books[name] = ""
     #     json.dump(books, bookFile)
-    return jsonify({"feedback": f"Successfully registered user '{name}'"})
+    return jsonify({"feedback": f"Successfully registered user '{name}'", "name": name})
 
 # Logs in a user
 # Query args: name, pwd
@@ -108,7 +109,7 @@ def newBook():
     books[a.get("name")][toAdd["id"]] = toAdd
     with open("./books.json", mode='w') as bookFile:
         json.dump(books, bookFile, indent=4)
-    return jsonify({"feedback": "Book added!"})
+    return jsonify({"feedback": "Book added!", "id": toAdd["id"]})
 
 # Adds pages to the book with the given ID for the given user
 # Query args: name, id, pages
@@ -137,6 +138,28 @@ def isComplete():
         books = json.loads(content)
     return jsonify(books[a.get("name")][a.get("id")]["currentPages"] == books[a.get("name")][a.get("id")]["pages"])
 
+
+# Removes a book
+# Query args: name, id
+@app.route("/api/v1/removeBook")
+@cross_origin()
+def removeBook():
+    a = request.args
+    with open("./books.json", mode='r') as bookFile:
+        content = "".join(bookFile.readlines())
+    if a.get("id") not in content:
+        return jsonify({"err": "Book not found."})
+    books = json.loads(content)
+    if "history" in list(books[a.get("name")].keys()):
+        books[a.get("name")]["history"].append(books[a.get("name")][a.get("id")])
+    else:
+        books[a.get("name")]["history"] = []
+        books[a.get("name")]["history"].append(books[a.get("name")][a.get("id")])
+    del books[a.get("name")][a.get("id")]
+    with open("./books.json", mode='w') as bookFile:
+        json.dump(books, bookFile)
+    return jsonify({"feedback": "Book removed!"})
+
 # Gets the current state of a user's entire book collection
 # Query args: name
 @app.route("/api/v1/getCollection")
@@ -148,7 +171,112 @@ def getCollection():
             books = json.loads(content)
         except json.JSONDecodeError:
             return jsonify({"err": "Empty collection!"})
-    return jsonify(books[request.args.get("name")])    
+    return jsonify(books[request.args.get("name")])
 
-if __name__ == '__main__':
+# Gets the stats of the user
+# Query args: name
+@app.route("/api/v1/getStats")
+@cross_origin()
+def getStats():
+    a = request.args
+    with open("./books.json", mode="r") as bookFile:
+        content = "".join(bookFile.readlines())
+    if a.get("name") not in content:
+        return jsonify({"feedback": "User has no book record.", "booksRead": 0, "pagesRead": 0, "recommendations": 0})
+    books = json.loads(content)
+    pagesRead = 0
+    booksRead = 0
+    for book in books[a.get("name")]["history"]:
+        pagesRead += book["currentPages"]
+        if book["currentPages"] == book["pages"]:
+            booksRead += 1
+        pass
+    for key, value in books[a.get("name")].items():
+        if key == "history":
+            continue
+        pagesRead += value["currentPages"]
+    return jsonify({"booksRead": booksRead, "pagesRead": pagesRead, "recommendations": 0})
+
+
+# --------------------------------------------
+# COMMUNITY STUFF
+
+def generateJoinCode():
+    code = ""
+    for i in range(7):
+        code += "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890"[randint(0, 61)]
+    return code
+
+# Creates a community with the given user as owner
+# Query args: name
+@app.route("/api/v1/createCommunity")
+@cross_origin()
+def createCommunity():
+    joinCode = generateJoinCode()
+    a = request.args
+    with open("./community.json", mode='r') as commFile:
+        content = "".join(commFile.readlines())
+    if "{" not in content:
+        communities = {joinCode: {"members": [a.get("name")], "owner": a.get("name")}}
+    else:
+        if a.get("name") in content:
+            return jsonify({"err": "Already in a community."})
+        communities = json.loads(content)
+        communities[joinCode] = {"members": [a.get("name")], "owner": a.get("name")}
+    with open("./community.json", mode='w') as commFile:
+        json.dump(communities, commFile)
+    return jsonify({"feedback": "Community created!"})
+
+# Joins a community with a provided join code
+# Query args: name, code
+@app.route("/api/v1/joinCommunity")
+@cross_origin()
+def joinCommunity():
+    a = request.args
+    with open("./community.json", mode="r") as commFile:
+        content = "".join(commFile.readlines())
+    if a.get("code") not in content:
+        return jsonify({"err": "Invalid community code."})
+    if a.get("name") in content:
+        return jsonify({"err": "Already in a community."})
+    communities = json.loads(content)
+    communities[a.get("code")]["members"].append(a.get("name"))
+    with open("./community.json", mode='w') as commFile:
+        json.dump(communities, commFile)
+    return jsonify({"feedback": "Joined community!"})
+
+# Returns information for the user's community
+@app.route("/api/v1/getCommunity")
+@cross_origin()
+def getCommunity():
+    a = request.args
+    with open("./community.json", mode="r") as commFile:
+        content = "".join(commFile.readlines())
+    if a.get("name") not in content:
+        return jsonify({"err": "Not in a community."})
+    communities = json.loads(content)
+    for code, community in communities.items():
+        if a.get("name") in community["members"]:
+            return jsonify({code: community})
+
+@app.route("/api/v1/leaveCommunity")
+@cross_origin()
+def leaveCommunity():
+    a = request.args
+    with open("./community.json", mode="r") as commFile:
+        content = "".join(commFile.readlines())
+    communities = json.loads(content)
+    if a.get("code") not in communities.keys():
+        return jsonify({"err", "Invalid community code."})
+    for code, community in communities.items():
+        if a.get("code") == code and a.get("name") not in community["members"]:
+            return jsonify({"err", "Not in specified community."})
+        else:
+            community["members"].remove(a.get("code"))
+    with open("./community.json", mode="w") as commFile:
+        json.dump(communities, commFile)
+    return jsonify({"feedback": "Successfully left community."})
+
+
+if __name__ == "__main__":
     app.run(port=8888)
