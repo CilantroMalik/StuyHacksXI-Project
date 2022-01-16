@@ -7,8 +7,8 @@ import { httpGetAsync } from '../../utils';
 export function Left({user}: {user: string}) {
     let navigate = useNavigate();
     let dispatch = useAppDispatch();
-    let history: any = useAppSelector(selectUserHistory);
-    let [userBooks, setUserBooks] = useState(null);
+    let [history, setHistory] = useState([])
+    let [userBooks, setUserBooks] = useState({});
     let [stats, setStats]: any = useState(null);
     let [topHistory, setTopHistory]: any = useState(null);
     let [noHistory, setNoHistory]: any = useState(false);
@@ -64,10 +64,9 @@ export function Left({user}: {user: string}) {
             if (json.err) {
                 console.error("HISTORY", json.err);
                 setNoHistory(true);
-                dispatch(setUserHistory([]));
                 return;
             }
-            dispatch(setUserHistory(json));
+            setHistory(json)
         });
     }
 
