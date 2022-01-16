@@ -2,7 +2,7 @@ import React, { CSSProperties, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { setUser, selectUser, selectUserBooks, setUserBooks } from '../user/userSlice';
 import { useNavigate } from 'react-router';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { httpGetAsync } from '../../utils';
 
