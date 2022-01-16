@@ -102,7 +102,7 @@ export function Right() {
           </div>
 
           <div className="h-5 rounded-md w-full p-0" style={{backgroundColor: '#dae3d3'}}>
-            <div className="rounded-md m-0 h-full" style={{width: `${100*userBooks[i].currentPages/userBooks[i].pages}%`, backgroundColor: '#eb5160'}}></div>
+            <div className="rounded-md m-0 h-full" style={{width: `${100*userBooks[i].currentPages/userBooks[i].pages}%`, backgroundColor: (userBooks[i].currentPages!==userBooks[i].pages ? '#eb5160' : "#7CA682")}}></div>
           </div>
 
           <button className="ml-0 mr-auto" onClick={() => markCompleted(i)}>Mark as Completed</button>
