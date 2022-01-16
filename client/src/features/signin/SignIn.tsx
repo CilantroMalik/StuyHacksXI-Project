@@ -57,7 +57,7 @@ export function SignIn() {
       
       console.log(res);
 
-      if (json.err) {
+      if (json.err && json.err.indexOf("alread logged in") !== -1) {
         console.error(json.err);
         setErrorMessage(json.err);
       } else {
