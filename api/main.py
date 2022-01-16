@@ -105,11 +105,11 @@ def newBook():
             books = json.loads(content)
             if a.get("name") not in content:
                 books[a.get("name")] = {}
-    toAdd = {"id": str(uuid1()), "title": a.get("title"), "author": a.get("author"), "pages": int(a.get("pages")), "currentPages": 0}
+    toAdd = {"id": str(uuid1()), "title": a.get("title"), "author": a.get("author"), "pages": int(a.get("pages")), "currentPages": 0, "cover_id": int(a.get("cover_id"))}
     books[a.get("name")][toAdd["id"]] = toAdd
     with open("./books.json", mode='w') as bookFile:
         json.dump(books, bookFile, indent=4)
-    return jsonify({"feedback": "Book added!", "id": toAdd["id"]})
+    return jsonify(books[request.args.get("name")])
 
 # Adds pages to the book with the given ID for the given user
 # Query args: name, id, pages
@@ -171,7 +171,21 @@ def getCollection():
             books = json.loads(content)
         except json.JSONDecodeError:
             return jsonify({"err": "Empty collection!"})
+
     return jsonify(books[request.args.get("name")])
+
+# Gets the history of a user
+# Query args: name
+@app.route("/api/v1/getHistory")
+@cross_origin()
+def getHistory():
+    a = request.args
+    with open("./books.json", mode='r') as bookFile:
+        content = "".join(bookFile.readlines())
+    if a.get("name") not in content:
+        return jsonify({"feedback": "User has no book record."})
+    books = json.loads(content)
+    return jsonify(books[a.get("name")]["history"])
 
 # Gets the stats of the user
 # Query args: name
