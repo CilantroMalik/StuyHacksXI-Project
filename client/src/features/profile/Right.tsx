@@ -1,6 +1,6 @@
 import React, { CSSProperties, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { setUser, selectUser, selectUserBooks, setUserBooks, setUserHistory } from '../user/userSlice';
+import {setUser, selectUser, selectUserBooks, setUserBooks, setUserHistory, setUserCommunity} from '../user/userSlice';
 import { useNavigate } from 'react-router';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -76,6 +76,9 @@ export function Right() {
       }
       removeCookie("user");
       dispatch(setUser({ username: null, signedIn: false, avatar: null }));
+      dispatch(setUserBooks({}))
+      dispatch(setUserHistory([]))
+      dispatch(setUserCommunity({}))
       navigate("/");
     });
   }

@@ -28,8 +28,8 @@ export function CommunityAdd() {
         httpGetAsync(url, (res: string) => {
             let json = JSON.parse(res);
             dispatch(setUserCommunity(json))
+            navigate("/community")
         });
-        navigate("/community")
     }
 
     return (

@@ -1,7 +1,7 @@
 import React, { CSSProperties, useState, useEffect } from 'react';
 import { httpGetAsync } from '../../utils';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { selectUser, setUser } from '../user/userSlice';
+import {selectUser, setUser, setUserBooks, setUserCommunity, setUserHistory} from '../user/userSlice';
 import { useNavigate } from 'react-router';
 import { useCookies } from "react-cookie";
 
@@ -45,6 +45,9 @@ export function SignUp() {
       }
       removeCookie("user");
       dispatch(setUser({ username: null, signedIn: false, avatar: null }));
+      dispatch(setUserBooks({}))
+      dispatch(setUserHistory([]))
+      dispatch(setUserCommunity({}))
     });
   }
 
