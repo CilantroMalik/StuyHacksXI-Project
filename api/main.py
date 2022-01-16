@@ -280,7 +280,7 @@ def getCommunity():
         return jsonify({"err": "Not in a community."})
     communities = json.loads(content)
     for code, community in communities.items():
-        if '"' + a.get("name") + '"' in community["members"]:
+        if a.get("name") in community["members"]:
             return jsonify({code: community})
 
 # Removes the given user from the specified community
