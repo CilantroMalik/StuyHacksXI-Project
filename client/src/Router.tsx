@@ -9,6 +9,7 @@ import { EditBook } from './features/editBook/EditBook';
 import { useAppSelector, useAppDispatch } from './app/hooks';
 import { setUser, selectUser } from './features/user/userSlice';
 import { useNavigate } from 'react-router';
+import { LandingPage } from './features/landingPage/landingPage';
 
 function ResetState() {
   let dispatch = useAppDispatch();
@@ -31,13 +32,13 @@ function ResetState() {
         navigate("/home");
     } else {
         console.log("ROUTING TO SIGNIN")
-        navigate("/signin");
+        navigate("/welcome");
     }
   }, []);
 
   return (
     <div>
-      <p> state reset </p>
+      <p>Loading...</p>
     </div>
   )
 }
@@ -51,6 +52,7 @@ function Router() {
       * otherwise take the user to their dashboard
       */ }
       <Route path="/" element={<ResetState />}/>
+      <Route path="/welcome" element={<LandingPage />}/>
       <Route path="/signin" element={<SignIn />}/>
       <Route path="/signup" element={<SignUp />}/>
       <Route path="/home" element={<Profile />}/>

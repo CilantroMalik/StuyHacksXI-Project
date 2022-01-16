@@ -23,7 +23,7 @@ export function AddBook() {
         let pages = encodeURI(e.target.pages.value)
         console.log(title, author, pages)
 
-        let url = `http://127.0.0.1:8888/api/v1/newBook?name=${user?.username}&title=${title}&author=${author}&pages=${pages}`
+        let url = `http://127.0.0.1:8888/api/v1/newBook?name=${user?.username}&title=${title}&author=${author}&pages=${pages}&cover_id=${cover}`
 
         httpGetAsync(url, (res: string) => {
             let json = JSON.parse(res);
@@ -36,9 +36,6 @@ export function AddBook() {
                 navigate("/home");
             }
         });
-
-        e.target.username.value = "";
-        e.target.username.password = "";
     }
 
     return (

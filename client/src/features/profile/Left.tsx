@@ -1,11 +1,22 @@
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { setUser, selectUser } from '../user/userSlice';
 import { useNavigate } from 'react-router';
+import { httpGetAsync } from '../../utils';
 
 export function Left() {
   let navigate = useNavigate();
   let user = useAppSelector(selectUser);
+  let [stats, setStats]: [any, any] = useState(null);
+
+  useEffect(() => {
+    let url = `http://127.0.0.1:8888/api/v1/getStats?name=${user?.username}`;
+    httpGetAsync(url, (res: string) => {
+      let json = JSON.parse(res);
+      console.log("STATS", json);
+      setStats(json);
+    });
+  }, []);
 
   const leftStyles: CSSProperties = {
     flex: 0.4,
