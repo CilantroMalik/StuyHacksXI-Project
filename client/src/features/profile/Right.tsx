@@ -2,8 +2,11 @@ import React, { CSSProperties } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { setUser, selectUser } from '../user/userSlice';
 import { useNavigate } from 'react-router';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 export function Right() {
+  let navigate = useNavigate();
   let user = useAppSelector(selectUser);
   
   return (
@@ -16,10 +19,10 @@ export function Right() {
         <div style={{width: 100, height: 120, backgroundColor: "#37337a"}}></div>
         <div className="ml-4" style={{display: 'flex', flexDirection: 'column', justifyContent: "space-evenly", width: "100%", height: "100%"}}>
           <div style={{display: 'flex', flexDirection: 'row', alignItems: 'start'}}>
-            <h1 className="text-xl font-bold" style={{color: "#201e50"}}>
+            <h1 className="text-2xl font-bold" style={{color: "#201e50"}}>
               Title
             </h1>
-            <h1 className="text-xl ml-2" style={{color: "#201e50"}}>
+            <h1 className="text-2xl ml-2" style={{color: "#201e50"}}>
               by Author
             </h1>
           </div>
@@ -30,14 +33,12 @@ export function Right() {
         </div>
       </div>) }
 
-      <div className="mt-6" style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-        <h1 className="text-8xl ml-2" style={{color: "#201e50"}}>
-          +
-        </h1>
-        <h1 className="text-6xl ml-4" style={{color: "#201e50"}}>
+      <button className="mt-6 rounded-lg" onClick={() => navigate("/addbook")} style={{display: 'flex', flexDirection: 'row', alignItems: 'center', border: "1px solid #201e50", paddingLeft: 5, paddingRight: 15, paddingTop: 10, paddingBottom: 10}}>
+        <h1 className="text-2xl ml-4" style={{color: "#201e50", display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+          <p className="text-xl mr-4"><FontAwesomeIcon icon={faPlus} /></p>
           Add Book
         </h1>
-      </div>
+      </button>
     </div>
   );
 }
