@@ -19,3 +19,7 @@ export function httpSendJSON(theUrl: string,
     }
     fetch(theUrl, options).then((res: any) => callback(res));
 }
+
+export async function httpGet(url: string, callback: any) {
+  fetch(url, { method: "GET" }).then((res: any) => callback(res));
+}
