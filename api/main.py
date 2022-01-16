@@ -185,6 +185,8 @@ def getHistory():
     if a.get("name") not in content:
         return jsonify({"feedback": "User has no book record."})
     books = json.loads(content)
+    if "history" not in list(books[a.get("name")].keys()):
+        return jsonify({"err": "User has no history."})
     return jsonify(books[a.get("name")]["history"])
 
 # Gets the stats of the user
@@ -200,11 +202,11 @@ def getStats():
     books = json.loads(content)
     pagesRead = 0
     booksRead = 0
-    for book in books[a.get("name")]["history"]:
-        pagesRead += book["currentPages"]
-        if book["currentPages"] == book["pages"]:
-            booksRead += 1
-        pass
+    if "history" in list(books[a.get("name")].keys()):
+        for book in books[a.get("name")]["history"]:
+            pagesRead += book["currentPages"]
+            if book["currentPages"] == book["pages"]:
+                booksRead += 1
     for key, value in books[a.get("name")].items():
         if key == "history":
             continue
