@@ -36,8 +36,10 @@ def register():
     pwd = request.args.get("pwd")
     avatar = randint(1, 10)
     with open("./users.csv", mode='r') as users:
-        if f"{name}," in "".join(users.readlines()):
-            return jsonify({"err": "Error: username already exists"})
+        lines = users.readlines()
+        for line in lines:
+            if name == line.split(",")[0]:
+                return jsonify({"err": "Error: username already exists"})
     with open("./users.csv", mode='a+') as users:
         users.write(f"{name},{pwd},{avatar}\n")
     # create the new user's book list
