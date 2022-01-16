@@ -12,7 +12,7 @@ export function AddBook() {
     let dispatch = useAppDispatch();
     let [cover, setCover] = useState(1)
 
-    const colorMap = ["themeRed", "themeYellow", "themeGreen", "themeGray"]
+    const colorMap = ["url(/bgs/red.png)", "url(/bgs/yellow.png)", "url(/bgs/green.png)", "url(/bgs/gray.png)"]
 
     function submit(e: any): void {
         console.log("submitted")
@@ -39,9 +39,9 @@ export function AddBook() {
     }
 
     return (
-        <div style={{width: "100vw", height: "100vh"}} className="bg-themeBlue">
+        <div style={{width: "100vw", height: "100vh", backgroundImage: `url(/bgs/addBook.png)`}}>
             <div className="flex flex-col justify-center content-center items-center">
-                <div style={{width: "10vw", height: "25vh"}} className={`m-10 bg-${colorMap[cover-1]}`}></div>
+                <div style={{width: "10vw", height: "25vh", backgroundImage: colorMap[cover-1]}} className="m-10"></div>
                 <div className="flex flex-row justify-center content-center items-center">
                     <button className="m-5 w-20 h-20 bg-themeRed rounded-lg" onClick={() => setCover(1)}></button>
                     <button className="m-5 w-20 h-20 bg-themeYellow rounded-lg" onClick={() => setCover(2)}></button>

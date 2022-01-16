@@ -43,7 +43,7 @@ export function EditBook() {
     }
 
     return (
-        <div style={{width: "100vw", height: "100vh"}} className="bg-blue-300">
+        <div style={{width: "100vw", height: "100vh", backgroundImage: `url(/bgs/editBook.png`}}>
             <div className="flex flex-col justify-center content-center items-center">
                 {/*@ts-ignore*/}
                 <div style={{width: "10vw", height: "30vh"}} className={`m-10 bg-${cover}`}></div>
