@@ -59,7 +59,7 @@ def login():
     pwd = request.args.get("pwd")
     with open('./users.csv', mode='r') as users:
         if f"{name},{pwd}" not in "".join(users.readlines()):
-            return jsonify({"err": f"Error: invalid username/password combination '{name}'/'{pwd}'."})
+            return jsonify({"err": f"Error: invalid username/password combination."})
         else:
             if name not in currently_logged_in:
                 currently_logged_in.append(name)
