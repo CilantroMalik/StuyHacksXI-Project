@@ -71,10 +71,9 @@ export function Left() {
 
   useEffect(() => {
     if (!noHistory) {
-      let newTopHistory = null;
+      let newTopHistory = topHistory !== null ? topHistory : [[{id: 1}, {id: 2}, {id: 3}, {id: 4}], [{id: 5}, {id: 6}, {id: 7}]];
       for (let i = 0; i < 7; i++) {
         if (i >= history.length) break;
-        newTopHistory = topHistory !== null ? topHistory : [[{id: 1}, {id: 2}, {id: 3}, {id: 4}], [{id: 5}, {id: 6}, {id: 7}]];
         if (i < 4) newTopHistory[0][i] = history[i];
         else newTopHistory[1][i-4] = history[i];
         setTopHistory(newTopHistory);
@@ -125,10 +124,10 @@ export function Left() {
             </h1>
           </div>
           <div className="rounded-lg" style={{backgroundColor: "#37337a"}}>
-            { topHistory !== null ? (<>
+            { !noHistory && topHistory !== null ? (<>
               <div style={rowStyles}> { topHistory[0].map((obj: any) => {
                   return (
-                    <div key={obj.id} className={`bg-no-repeat bg-cover bg-cener rounded-lg m-2 ${obj.cover_id ? "" : "opacity-50"}`}
+                    <div key={obj.id} className={`bg-no-repeat bg-cover bg-center rounded-lg m-2 ${obj.cover_id ? "" : "opacity-50"}`}
                       style={{backgroundColor: (obj.cover_id ? "" : "#f1f7ed"), minWidth:"6rem", maxWidth:"6rem", height: "8rem", backgroundImage:colorMap[obj.cover_id-1]}}>
                     </div>
                   )
@@ -137,17 +136,17 @@ export function Left() {
 
               <div style={rowStyles}> { topHistory[1].map((obj: any) => {
                 return (
-                  <div key={obj.id} className={`bg-no-repeat bg-cover bg-cener rounded-lg m-2 ${obj.cover_id ? "" : "opacity-50"}`}
+                  <div key={obj.id} className={`bg-no-repeat bg-cover bg-center rounded-lg m-2 ${obj.cover_id ? "" : "opacity-50"}`}
                     style={{backgroundColor: (obj.cover_id ? "" : "#f1f7ed"), minWidth:"6rem", maxWidth:"6rem", height: "8rem", backgroundImage:colorMap[obj.cover_id-1]}}>
                   </div>
                 )
               })}
-                <div className="flex flex-col justify-center align-center column-center text-center hover:curser-pointer rounded-lg m-2 opacity-50" style={{backgroundColor: "#f1f7ed", minWidth:"6rem", maxWidth:"6rem", height: "8rem"}}> See All Completed Books</div>
+                <div className="flex flex-col justify-center align-center column-center text-center hovor:curser-pointer rounded-lg m-2 opacity-50" style={{backgroundColor: "#f1f7ed", minWidth:"6rem", maxWidth:"6rem", height: "8rem"}}> See All Completed Books</div>
               </div>
             </>) : (<>
               <div style={rowStyles}> { historyTemplate[0].map((obj: any) => {
                   return (
-                    <div key={obj.id} className={`bg-no-repeat bg-cover bg-cener rounded-lg m-2 ${obj.cover_id ? "" : "opacity-50"}`}
+                    <div key={obj.id} className={`bg-no-repeat bg-cover bg-center rounded-lg m-2 ${obj.cover_id ? "" : "opacity-50"}`}
                       style={{backgroundColor: (obj.cover_id ? "" : "#f1f7ed"), minWidth:"6rem", maxWidth:"6rem", height: "8rem", backgroundImage:colorMap[obj.cover_id-1]}}>
                     </div>
                   )
@@ -156,12 +155,12 @@ export function Left() {
 
               <div style={rowStyles}> { historyTemplate[1].map((obj: any) => {
                 return (
-                  <div key={obj.id} className={`bg-no-repeat bg-cover bg-cener rounded-lg m-2 ${obj.cover_id ? "" : "opacity-50"}`}
+                  <div key={obj.id} className={`bg-no-repeat bg-cover bg-center rounded-lg m-2 ${obj.cover_id ? "" : "opacity-50"}`}
                     style={{backgroundColor: (obj.cover_id ? "" : "#f1f7ed"), minWidth:"6rem", maxWidth:"6rem", height: "8rem", backgroundImage:colorMap[obj.cover_id-1]}}>
                   </div>
                 )
               })}
-                <div className="flex flex-col justify-center align-center column-center text-center hover:curser-pointer rounded-lg m-2 opacity-50" style={{backgroundColor: "#f1f7ed", minWidth:"6rem", maxWidth:"6rem", height: "8rem"}}> See All Completed Books</div>
+                <div className="flex flex-col justify-center align-center column-center text-center hover:cursor-pointer rounded-lg m-2 opacity-50" style={{backgroundColor: "#f1f7ed", minWidth:"6rem", maxWidth:"6rem", height: "8rem"}}> See All Completed Books</div>
               </div>
             </>)}
           </div>
