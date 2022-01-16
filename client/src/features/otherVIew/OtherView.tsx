@@ -23,7 +23,7 @@ export function OtherView() {
     }, []);
 
     return (
-        <div style={{width: "100vw", height: "100vh", backgroundImage: `url(/bgs/editBook.png`}}>
+        <div style={{width: "100vw", height: "100vh", backgroundImage: `url(/images/bgs/viewBook.png`}}>
             <div className="flex flex-col justify-center content-center items-center">
                 {/*@ts-ignore*/}
                 <div style={{width: "10vw", height: "30vh"}} className={`m-10 bg-${colorMap[userBooks[id].cover_id-1]}`}></div>
