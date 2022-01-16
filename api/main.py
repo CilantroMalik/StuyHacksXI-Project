@@ -262,6 +262,7 @@ def joinCommunity():
     return jsonify({"feedback": "Joined community!"})
 
 # Returns information for the user's community
+# Query args: name
 @app.route("/api/v1/getCommunity")
 @cross_origin()
 def getCommunity():
@@ -275,6 +276,8 @@ def getCommunity():
         if a.get("name") in community["members"]:
             return jsonify({code: community})
 
+# Removes the given user from the specified community
+# Query args: name, code
 @app.route("/api/v1/leaveCommunity")
 @cross_origin()
 def leaveCommunity():
@@ -289,6 +292,24 @@ def leaveCommunity():
             return jsonify({"err", "Not in specified community."})
         else:
             community["members"].remove(a.get("code"))
+    with open("./community.json", mode="w") as commFile:
+        json.dump(communities, commFile)
+    return jsonify({"feedback": "Successfully left community."})
+
+# Deletes the community owned by the given user
+# Query args: name
+@app.route("/api/v1/closeCommunity")
+@cross_origin()
+def closeCommunity():
+    a = request.args
+    with open("./community.json", mode='r') as commFile:
+        content = "".join(commFile.readlines())
+    communities = json.loads(content)
+    toRemove = ""
+    for code, community in communities.items():
+        if community["owner"] == a.get("name"):
+            toRemove = code
+    del communities[toRemove]
     with open("./community.json", mode="w") as commFile:
         json.dump(communities, commFile)
     return jsonify({"feedback": "Successfully left community."})
