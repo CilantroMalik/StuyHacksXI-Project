@@ -10,20 +10,26 @@ export function EditBook() {
     let navigate = useNavigate();
     const location = useLocation()
     // let dispatch = useAppDispatch();
-    let [pagesToAdd, setPagesToAdd] = useState(0);
+    let [pagesToAdd, _setPagesToAdd] = useState(0);
 
-    const colorMap = ["themeRed", "themeYellow", "themeGreen", "themeGray"]
+    // const colorMap = ["themeRed", "themeYellow", "themeGreen", "themeGray"]
+    const colorMap = ["url(/images/covers/red.png)", "url(/images/covers/yellow.png)", "url(/images/covers/green.png)", "url(/images/covers/gray.png)"]
     // @ts-ignore
     const id = location.state.id
 
-    let [cover, setCover] = useState(colorMap[3]);
+    let [cover, setCover] = useState(1);
 
     useEffect(() => {
-      // setCurrentBook({...userBooks[id]});
-      // @ts-ignore
-      console.log("EDIT", userBooks[id]);
-      setCover(colorMap[userBooks[id].cover_id-1]);
+      setCover(userBooks[id].cover_id);
     }, []);
+
+    function setPagesToAdd(n: number): void {
+      if (userBooks[id].currentPages + n > userBooks[id].pages) {
+        _setPagesToAdd(userBooks[id].pages - userBooks[id].currentPages);
+      } else {
+        _setPagesToAdd(n)
+      }
+    }
 
     function submit(e: any): void {
         e.preventDefault();
@@ -43,11 +49,10 @@ export function EditBook() {
     }
 
     return (
-        <div style={{width: "100vw", height: "100vh", backgroundImage: `url(/bgs/editBook.png`}}>
+        <div className="text-themeSepia bg-no-repeat bg-auto bg-center" style={{width: "100vw", height: "100vh", backgroundImage: `url(images/bgs/editBook.png`}}>
             <div className="flex flex-col justify-center content-center items-center">
-                {/*@ts-ignore*/}
-                <div style={{width: "10vw", height: "30vh"}} className={`m-10 bg-${cover}`}></div>
-                <div className="w-1/2 flex flex-col justify-center content-center items-center">
+                <div className="w-1/2 flex flex-col justify-center content-center items-center mt-12">
+                    <div style={{width:"10rem", height: "14rem", backgroundImage: colorMap[cover-1]}} className="m-10 bg-no-repeat bg-cover"></div>
                     {/*@ts-ignore*/}
                     <h1 className="mt-5 text-6xl font-black">{userBooks[id].title}</h1>
                     {/*@ts-ignore*/}

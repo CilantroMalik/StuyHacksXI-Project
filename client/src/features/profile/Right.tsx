@@ -1,6 +1,6 @@
 import React, { CSSProperties, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { setUser, selectUser, selectUserBooks, setUserBooks } from '../user/userSlice';
+import { setUser, selectUser, selectUserBooks, setUserBooks, setUserHistory } from '../user/userSlice';
 import { useNavigate } from 'react-router';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -11,22 +11,33 @@ export function Right() {
   let user = useAppSelector(selectUser);
   let dispatch = useAppDispatch();
   let userBooks: any = useAppSelector(selectUserBooks);
-  // let userBooks: any = {"a": {title: "title"}, "b": {title: "title"}, "c": {title: "title"}, "d": {title: "title"}, "history": {}};
-
   const colorMap = ["url(/images/covers/red.png)", "url(/images/covers/yellow.png)", "url(/images/covers/green.png)", "url(/images/covers/gray.png)"]
 
-  useEffect(() => {
+  function getBooks() {
     let url = `http://127.0.0.1:8888/api/v1/getCollection?name=${user?.username}`
     httpGetAsync(url, (res: string) => {
       let json = JSON.parse(res);
       if (json.err) {
-        console.log(json.err);
+        console.error(json.err);
         return;
       } else {
         dispatch(setUserBooks(json));
       }
     });
-  }, []);
+  }
+
+  function getHistory() {
+    let url = `http://127.0.0.1:8888/api/v1/getHistory?name=${user?.username}`;
+    httpGetAsync(url, (res: string) => {
+      let json = JSON.parse(res);
+      if (json.err) {
+        console.error("HISTORY", json.err);
+        dispatch(setUserHistory([]));
+        return;
+      }
+      dispatch(setUserHistory(json));
+    });
+  }
 
   function countBooks(): number {
     if (userBooks["history"]) {
@@ -41,6 +52,21 @@ export function Right() {
     });
   }
 
+  function markCompleted(bookId: string) {
+    const url = `http://127.0.0.1:8888/api/v1/removeBook?name=${user?.username}&id=${bookId}`;
+    httpGetAsync(url, (res: string) => {
+      let json = JSON.parse(res);
+      if (json.err) {
+        console.error(json.err);
+      }
+      getBooks();
+      getHistory();
+      navigate("/");
+    });
+  }
+
+  useEffect(getBooks, []);
+
   return (
     <div style={{padding: 60, flex: 0.6}}>
       <h1 className="text-2xl font-bold" style={{color: "#201e50"}}>
@@ -48,7 +74,7 @@ export function Right() {
       </h1>
 
       { Object.keys(userBooks).filter(k => k !== "history").map(i => <div key={i} style={{display: 'flex', flexDirection: 'row', alignItems: 'start', marginTop: 30}}>
-        <div style={{width: "10rem", height: "14rem", backgroundImage: colorMap[userBooks[i].cover_id-1]}} onClick={() => editBook(i)} className="hover:cursor-pointer bg-no-repeat bg-cover"></div>
+        <div style={{minWidth: "7rem", maxWidth: "7rem", height: "10rem", backgroundImage: colorMap[userBooks[i].cover_id-1]}} onClick={() => editBook(i)} className="hover:cursor-pointer bg-no-repeat bg-cover"></div>
         <div className="ml-4" style={{display: 'flex', flexDirection: 'column', justifyContent: "space-evenly", width: "100%", height: "100%"}}>
           <div style={{display: 'flex', flexDirection: 'row', alignItems: 'start'}}>
             <h1 className="text-2xl font-bold" style={{color: "#201e50"}}>
@@ -60,8 +86,10 @@ export function Right() {
           </div>
 
           <div className="h-5 rounded-md w-full p-0" style={{backgroundColor: '#dae3d3'}}>
-            <div className="rounded-md m-0 h-full" style={{width: "75%", backgroundColor: '#eb5160'}}></div>
+            <div className="rounded-md m-0 h-full" style={{width: `${100*userBooks[i].currentPages/userBooks[i].pages}%`, backgroundColor: '#eb5160'}}></div>
           </div>
+
+          <button className="ml-0 mr-auto" onClick={() => markCompleted(i)}>Mark as Completed</button>
         </div>
       </div>) }
 

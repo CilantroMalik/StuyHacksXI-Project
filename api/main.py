@@ -151,10 +151,10 @@ def removeBook():
         return jsonify({"err": "Book not found."})
     books = json.loads(content)
     if "history" in list(books[a.get("name")].keys()):
-        books[a.get("name")]["history"].append(books[a.get("name")][a.get("id")])
+        books[a.get("name")]["history"].insert(0, books[a.get("name")][a.get("id")])
     else:
         books[a.get("name")]["history"] = []
-        books[a.get("name")]["history"].append(books[a.get("name")][a.get("id")])
+        books[a.get("name")]["history"].insert(0, books[a.get("name")][a.get("id")])
     del books[a.get("name")][a.get("id")]
     with open("./books.json", mode='w') as bookFile:
         json.dump(books, bookFile)
@@ -183,7 +183,7 @@ def getHistory():
     with open("./books.json", mode='r') as bookFile:
         content = "".join(bookFile.readlines())
     if a.get("name") not in content:
-        return jsonify({"feedback": "User has no book record."})
+        return jsonify({"err": "User has no book record."})
     books = json.loads(content)
     if "history" not in list(books[a.get("name")].keys()):
         return jsonify({"err": "User has no history."})

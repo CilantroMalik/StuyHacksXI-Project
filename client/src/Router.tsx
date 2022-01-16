@@ -22,19 +22,14 @@ function ResetState() {
 
   function resetState() {
     dispatch(setUser(null))
-    console.log("reset state", user);
   }
 
   useEffect(() => {
-    console.log("RESETTING STATE")
     resetState()
-    console.log("COOKIE VALUE", cookies["user"])
     if (cookies["user"] != undefined) {
         dispatch(setUser({username: cookies["user"], signedIn: true}))
-        console.log("ROUTING TO HOME")
         navigate("/home");
     } else {
-        console.log("ROUTING TO SIGNIN")
         navigate("/welcome");
     }
   }, []);
