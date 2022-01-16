@@ -46,7 +46,7 @@ export function CommunityHome() {
             setCollections({...newCollections})
             //setCollections(newCollections)
         });
-        console.log(comm[Object.keys(comm)[0]].members.filter((m: any) => m !== comm[Object.keys(comm)[0]].owner))
+        console.log("members unfiltered", comm[Object.keys(comm)[0]].members)
         comm[Object.keys(comm)[0]].members.filter((m: any) => m !== comm[Object.keys(comm)[0]].owner).forEach((k: any) => {
             let url = `http://127.0.0.1:8888/api/v1/getCollection?name=${k}`;
             httpGetAsync(url, (res: string) => {
