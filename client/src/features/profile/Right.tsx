@@ -2,7 +2,7 @@ import React, { CSSProperties } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { setUser, selectUser } from '../user/userSlice';
 import { useNavigate } from 'react-router';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 export function Right() {

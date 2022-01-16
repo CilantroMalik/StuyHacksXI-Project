@@ -47,7 +47,7 @@ function Router() {
       <Route path="/signup" element={<SignUp />}/>
       <Route path="/home" element={<Profile />}/>
       <Route path="/addBook" element={<AddBook />}/>
-      {/* <Route path="/editBook" element={<EditBook />}/> */}
+      <Route path="/editBook" element={<EditBook />}/>
     </Routes>
   );
 }

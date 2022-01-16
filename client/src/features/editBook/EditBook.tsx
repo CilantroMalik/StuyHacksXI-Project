@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from 'react';
-
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { setUserBooks, selectUser, selectUserBooks } from '../user/userSlice';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import { httpGetAsync } from "../../utils";
 
-export function EditBook({id}: {id: string}) {
+export function EditBook() {
     let user = useAppSelector(selectUser)
     let userBooks = useAppSelector(selectUserBooks)
     let navigate = useNavigate();
+    const location = useLocation()
     let dispatch = useAppDispatch();
     let [pagesToAdd, setPagesToAdd] = useState(0);
 
     const colorMap = ["themeRed", "themeYellow", "themeGreen", "themeGray"]
+    // @ts-ignore
+    const id = location.state.id
 
     function submit(e: any): void {
         e.preventDefault();
 
-        // @ts-ignore
-        let url = `http://127.0.0.1:8888/api/v1/addPages?name=${user.username}&id=${id}&pages=${pagesToAdd}`
+        let url = `http://127.0.0.1:8888/api/v1/addPages?name=${user?.username}&id=${id}&pages=${pagesToAdd}`
 
         httpGetAsync(url, (res: string) => {
             let json = JSON.parse(res);
@@ -52,11 +53,11 @@ export function EditBook({id}: {id: string}) {
                         <button className="rounded-xl w-1/6" onClick={() => setPagesToAdd(pagesToAdd+10)}>+10</button>
                         <button className="rounded-xl w-1/6" onClick={() => setPagesToAdd(pagesToAdd+50)}>+50</button>
                     </div>
-                    <div className="mt-5 w-full h-5 bg-themeSepia">
+                    <div className="mt-5 w-full h-5 bg-themeSepia rounded-md">
                         {/*@ts-ignore*/}
-                        <div className="h-full bg-themeProgress" style={{width: `${(userBooks[id].currentPages+pagesToAdd)/userBooks[id].pages}%`}}>
+                        <div className="h-full bg-themeProgress rounded-md" style={{width: `${(userBooks[id].currentPages+pagesToAdd)/userBooks[id].pages}%`}}>
                             {/*@ts-ignore*/}
-                            <div className="h-full bg-[#443f8e]" style={{width: `${userBooks[id].currentPages/userBooks[id].pages}%`}}></div>
+                            <div className="h-full bg-[#443f8e] rounded-md" style={{width: `${userBooks[id].currentPages/userBooks[id].pages}%`}}></div>
                         </div>
                     </div>
                     <div className="mt-7">
