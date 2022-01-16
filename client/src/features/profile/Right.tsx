@@ -54,7 +54,10 @@ export function Right() {
     });
   }
 
-  function markCompleted(bookId: string) {
+  function markCompleted(bookId: string, nag: boolean) {
+    if (nag) {
+      alert("This book yearns to be finished... but if you insist.")
+    }
     const url = `http://127.0.0.1:8888/api/v1/removeBook?name=${user?.username}&id=${bookId}`;
     httpGetAsync(url, (res: string) => {
       let json = JSON.parse(res);
@@ -108,7 +111,7 @@ export function Right() {
             <div className="rounded-md m-0 h-full" style={{width: `${100*userBooks[i].currentPages/userBooks[i].pages}%`, backgroundColor: (userBooks[i].currentPages!==userBooks[i].pages ? '#eb5160' : "#7CA682")}}></div>
           </div>
 
-          <button className="ml-0 mr-auto" onClick={() => markCompleted(i)}>Mark as Completed</button>
+          <button className="ml-0 mr-auto" onClick={() => markCompleted(i, userBooks[i].currentPages!==userBooks[i].pages)}>Mark as Completed</button>
         </div>
       </div>) }
 

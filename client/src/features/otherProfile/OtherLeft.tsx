@@ -4,7 +4,7 @@ import { setUser, selectUser, selectUserBooks, selectUserHistory, setUserHistory
 import { useNavigate } from 'react-router';
 import { httpGetAsync } from '../../utils';
 
-export function Left({user}: {user: string}) {
+export function Left({user, avatar}: {user: string, avatar: number}) {
     let navigate = useNavigate();
     let dispatch = useAppDispatch();
     let [history, setHistory] = useState([])
@@ -92,7 +92,7 @@ export function Left({user}: {user: string}) {
     return (
         <div style={leftStyles}>
             <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
-                <div style={circleStyles}></div>
+                <div className="bg-no-repeat bg-center" style={{...circleStyles, backgroundImage: `url(/images/avatars/avatar${avatar}.png)`, backgroundSize: "175%"}}></div>
                 <h1 className="text-4xl font-bold ml-12" style={{color: "#f1f7ed"}}>
                     {user}
                 </h1>
