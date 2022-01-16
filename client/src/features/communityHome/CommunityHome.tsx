@@ -93,9 +93,9 @@ export function CommunityHome() {
             <div className="grid grid-rows-3 grid-cols-2 gap-10 justify-around justify-items-stretch w-4/5 h-2/3">
                 {console.log("rendered")}
                 {Object.keys(collections).slice(page === 1 ? 0 : 6, page === 1 ? Math.min(Object.keys(collections).length, 6) : Math.min(Object.keys(collections).length, 12)).map((username: any) => {
-                    console.log("mapping", username)
+                    console.log("mapping", username, userAvatars, userAvatars[username])
                     return (<div key={nanoid()} className="flex flex-row justify-center content-center items-center bg-[#282565] rounded-xl justify-items-stretch">
-                        <div className="flex bg-themeSepia rounded-full ml-10 justify-center content-center items-center" style={{width: "15vh", height: "11vh", backgroundImage: `url(/images/avatars/avatar${userAvatars[username]}.png)`}}><p>{username}</p></div>
+                        <div className="flex bg-no-repeat bg-cover bg-center rounded-full ml-10 justify-center content-center items-center" style={{width: "15vh", height: "11vh", backgroundImage: `url(/images/avatars/avatar${userAvatars[username]}.png)`}}><p className="font-black tracking-wider">{username}</p></div>
                         <div className="flex flex-col justify-evenly p-10 w-full">
                             { collections[username] === "empty" ? <h1 className="font-bold text-themeSepia text-3xl">No Books</h1> :
                                 collections[username].slice(0, Math.min(collections[username].length, 3)).map((obj: any) => <>
