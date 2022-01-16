@@ -61,7 +61,7 @@ def login():
         else:
             if name not in currently_logged_in:
                 currently_logged_in.append(name)
-            return jsonify({"name": name})
+            return jsonify({"name": name, "avatar": avatar})
 
 # Logs out a user
 # Query args: name
