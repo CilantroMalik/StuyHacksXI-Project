@@ -13,6 +13,7 @@ import { LandingPage } from './features/landingPage/landingPage';
 import { CommunityHome } from "./features/communityHome/CommunityHome";
 import { OtherProfile } from "./features/otherProfile/OtherProfile";
 import { OtherView } from "./features/otherVIew/OtherView";
+import { CommunityAdd } from "./features/communityAdd/CommunityAdd";
 
 function ResetState() {
   let dispatch = useAppDispatch();
@@ -70,6 +71,7 @@ function Router() {
       <Route path="/community" element={<CommunityHome />}/>
       <Route path="/otherView" element={<OtherView />}/>
       <Route path="/otherProfile" element={<OtherProfile />}/>
+      <Route path="/communityAdd" element={<CommunityAdd />}/>
     </Routes>
   );
 }

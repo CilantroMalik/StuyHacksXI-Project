@@ -62,6 +62,7 @@ export function AddBook() {
                     <button className="border border-solid border-gray-600 mt-3 p-1.5 pl-5 pr-5 rounded-md font-bold text-themeBlue" type="submit">Add book</button>
                 </form>
             </div>
+            <button className="bg-[#37337a] font-semibold text-xl text-themeSepia rounded-lg pt-2 pb-2 pr-10 pl-10" style={{position: "absolute", top: "1vh", right: "1vh"}} onClick={() => navigate("/home")}>Back</button>
         </div>
     );
 }

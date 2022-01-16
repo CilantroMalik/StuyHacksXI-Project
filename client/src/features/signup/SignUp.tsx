@@ -77,10 +77,10 @@ export function SignUp() {
   }, []);
 
   return (
-    <div style={pageStyles}>
+    <div className="bg-no-repeat bg-cover" style={pageStyles}>
       <div style={cardStyle}>
-        <div className="flex flex-row flex-1 items-center w-full"> {/* style={{flex: 1, display: "flex", alignItems: "center", width: "100%"}} */}
-          <form className="flex flex-col flex-1 m-3 items-start w-full" onSubmit={submit}> {/* style={{margin: "10px", display: "flex", flexDirection: "column", alignItems: "start", flex: 1}} */}
+        <div className="flex flex-row flex-1 items-center w-full">
+          <form className="flex flex-col flex-1 m-3 items-start w-full" onSubmit={submit}>
             <h1 className="text-3xl font-bold">
               Create an Account
             </h1>

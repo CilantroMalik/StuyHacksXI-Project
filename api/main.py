@@ -36,8 +36,10 @@ def register():
     pwd = request.args.get("pwd")
     avatar = randint(1, 10)
     with open("./users.csv", mode='r') as users:
-        if f"{name}," in "".join(users.readlines()):
-            return jsonify({"err": "Error: username already exists"})
+        lines = users.readlines()
+        for line in lines:
+            if name == line.split(",")[0]:
+                return jsonify({"err": "Error: username already exists"})
     with open("./users.csv", mode='a+') as users:
         users.write(f"{name},{pwd},{avatar}\n")
     # create the new user's book list
@@ -57,7 +59,7 @@ def login():
     pwd = request.args.get("pwd")
     with open('./users.csv', mode='r') as users:
         if f"{name},{pwd}" not in "".join(users.readlines()):
-            return jsonify({"err": f"Error: invalid username/password combination '{name}'/'{pwd}'."})
+            return jsonify({"err": f"Error: invalid username/password combination."})
         else:
             avatar = 1
             for line in users.readlines():
@@ -104,7 +106,7 @@ def newBook():
             books = {a.get("name"): {}}
         else:
             books = json.loads(content)
-            if a.get("name") not in content:
+            if '"' + a.get("name") + '"' not in content:
                 books[a.get("name")] = {}
     toAdd = {"id": str(uuid1()), "title": a.get("title"), "author": a.get("author"), "pages": int(a.get("pages")), "currentPages": 0, "cover_id": int(a.get("cover_id"))}
     books[a.get("name")][toAdd["id"]] = toAdd
@@ -183,7 +185,7 @@ def getHistory():
     a = request.args
     with open("./books.json", mode='r') as bookFile:
         content = "".join(bookFile.readlines())
-    if a.get("name") not in content:
+    if '"' + a.get("name") + '"' not in content:
         name = a.get("name")
         return jsonify({"err": f"User {name} has no book record."})
     books = json.loads(content)
@@ -199,7 +201,7 @@ def getStats():
     a = request.args
     with open("./books.json", mode="r") as bookFile:
         content = "".join(bookFile.readlines())
-    if a.get("name") not in content:
+    if '"' + a.get("name") + '"'not in content:
         return jsonify({"feedback": "User has no book record.", "booksRead": 0, "pagesRead": 0, "recommendations": 0})
     books = json.loads(content)
     pagesRead = 0
@@ -237,7 +239,7 @@ def createCommunity():
     if "{" not in content:
         communities = {joinCode: {"members": [a.get("name")], "owner": a.get("name")}}
     else:
-        if a.get("name") in content:
+        if '"' + a.get("name") + '"' in content:
             return jsonify({"err": "Already in a community."})
         communities = json.loads(content)
         communities[joinCode] = {"members": [a.get("name")], "owner": a.get("name")}
@@ -255,7 +257,7 @@ def joinCommunity():
         content = "".join(commFile.readlines())
     if a.get("code") not in content:
         return jsonify({"err": "Invalid community code."})
-    if a.get("name") in content:
+    if '"' + a.get("name") + '"' in content:
         return jsonify({"err": "Already in a community."})
     communities = json.loads(content)
     communities[a.get("code")]["members"].append(a.get("name"))
@@ -271,11 +273,11 @@ def getCommunity():
     a = request.args
     with open("./community.json", mode="r") as commFile:
         content = "".join(commFile.readlines())
-    if a.get("name") not in content:
+    if '"' + a.get("name") + '"' not in content:
         return jsonify({"err": "Not in a community."})
     communities = json.loads(content)
     for code, community in communities.items():
-        if a.get("name") in community["members"]:
+        if '"' + a.get("name") + '"' in community["members"]:
             return jsonify({code: community})
 
 # Removes the given user from the specified community
