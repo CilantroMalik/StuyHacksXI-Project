@@ -84,6 +84,14 @@ def logout():
         currently_logged_in.remove(name)
         return jsonify({"feedback": f"Successfully logged out user {name}"})
 
+# Gets avatars associated with users
+@app.route('/api/v1/avatars')
+@cross_origin()
+def avatars():
+    with open("./users.csv", mode='r') as users:
+        lines = [item.strip().split(",") for item in users.readlines()]
+        mapping = {item[0]: item[2] for item in lines}
+    return jsonify(mapping)
 
 # --------------------------------------------
 # ACTUAL BOOK STUFF
