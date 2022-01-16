@@ -73,7 +73,9 @@ export function SignUp() {
   }
 
   useEffect(() => {
-    signOut();
+    if (user?.signedIn) {
+      signOut();
+    }
   }, []);
 
   return (

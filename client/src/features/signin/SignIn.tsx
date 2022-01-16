@@ -80,7 +80,9 @@ export function SignIn() {
   }
 
   useEffect(() => {
-    signOut();
+    if (user?.signedIn) {
+      signOut();
+    }
     dispatch(setUser({username: null, signedIn: false, avatar: null}));
   }, []);
 
