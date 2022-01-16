@@ -54,11 +54,11 @@ export function AddBook() {
                 </div>
                 <form className="w-1/3 flex flex-col justify-center content-center items-center" onSubmit={submit}>
                     <h1 className="mt-5 text-4xl font-bold">Book Title</h1>
-                    <input id="title" className="mt-6 mb-6 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md py-2 pl-1.5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" style={{backgroundColor: "#e6f0e3"}} placeholder="Enter title of book" type="text"/>
+                    <input id="title" className="mt-6 mb-6 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md py-2 pl-1.5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm bg-themeField" placeholder="Enter title of book" type="text"/>
                     <h3 className=" mt-5 text-2xl font-semibold">Author</h3>
-                    <input id="author" className="mt-6 mb-6 placeholder:italic placeholder:text-slate-400 block w-1/2 border border-slate-300 rounded-md py-2 pl-1.5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" style={{backgroundColor: "#e6f0e3"}} placeholder="Enter author of book" type="text"/>
+                    <input id="author" className="mt-6 mb-6 placeholder:italic placeholder:text-slate-400 block w-1/2 border border-slate-300 rounded-md py-2 pl-1.5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm bg-themeField" placeholder="Enter author of book" type="text"/>
                     <h2 className="mt-5 text-3xl font-semibold">Pages</h2>
-                    <input id="pages" className="mt-6 mb-6 placeholder:italic placeholder:text-slate-400 block w-1/3 border border-slate-300 rounded-md py-2 pl-1.5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" style={{backgroundColor: "#e6f0e3"}} placeholder="Enter total # of pages" type="number"/>
+                    <input id="pages" className="mt-6 mb-6 placeholder:italic placeholder:text-slate-400 block w-1/3 border border-slate-300 rounded-md py-2 pl-1.5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm bg-themeField" placeholder="Enter total # of pages" type="number"/>
                     <button className="border border-solid border-gray-600 mt-3 p-1.5 pl-5 pr-5 rounded-md hover:bg-gray-100 font-bold" type="submit">Add book</button>
                 </form>
             </div>
