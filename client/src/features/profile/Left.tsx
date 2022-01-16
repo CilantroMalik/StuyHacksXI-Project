@@ -12,8 +12,10 @@ export function Left() {
   let userBooks: any = useAppSelector(selectUserBooks);
   let [stats, setStats]: any = useState(null);
   let [topHistory, setTopHistory]: any = useState(null);
+  let [noHistory, setNoHistory]: any = useState(false);
 
   const colorMap = ["url(/images/covers/red.png)", "url(/images/covers/yellow.png)", "url(/images/covers/green.png)", "url(/images/covers/gray.png)"]
+  const historyTemplate = [[{id: 1}, {id: 2}, {id: 3}, {id: 4}], [{id: 5}, {id: 6}, {id: 7}]];
 
   const leftStyles: CSSProperties = {
     flex: 0.4,
@@ -54,6 +56,7 @@ export function Left() {
       let json = JSON.parse(res);
       if (json.err) {
         console.error("HISTORY", json.err);
+        setNoHistory(true);
         dispatch(setUserHistory([]));
         return;
       }
@@ -67,12 +70,15 @@ export function Left() {
   }, []);
 
   useEffect(() => {
-    let newTopHistory = topHistory !== null ? topHistory : [[{id: 1}, {id: 2}, {id: 3}, {id: 4}], [{id: 5}, {id: 6}, {id: 7}]];
-    for (let i = 0; i < 7; i++) {
-      if (i >= history.length) break;
-      if (i < 4) newTopHistory[0][i] = history[i];
-      else newTopHistory[1][i-4] = history[i];
-      setTopHistory(newTopHistory);
+    if (!noHistory) {
+      let newTopHistory = null;
+      for (let i = 0; i < 7; i++) {
+        if (i >= history.length) break;
+        newTopHistory = topHistory !== null ? topHistory : [[{id: 1}, {id: 2}, {id: 3}, {id: 4}], [{id: 5}, {id: 6}, {id: 7}]];
+        if (i < 4) newTopHistory[0][i] = history[i];
+        else newTopHistory[1][i-4] = history[i];
+        setTopHistory(newTopHistory);
+      }
     }
   }, [history]);
 
@@ -119,17 +125,45 @@ export function Left() {
             </h1>
           </div>
           <div className="rounded-lg" style={{backgroundColor: "#37337a"}}>
-            { topHistory !== null && (<><div style={rowStyles}> {topHistory[0].map((obj: any) => {
-                return <div key={obj.id} className={`bg-no-repeat bg-cover bg-cener rounded-lg m-2 ${obj.cover_id ? "" : "opacity-50"}`}
-                style={{backgroundColor: (obj.cover_id ? "" : "#f1f7ed"), minWidth:"6rem", maxWidth:"6rem", height: "8rem", backgroundImage:colorMap[obj.cover_id-1]}}></div>
+            { topHistory !== null ? (<>
+              <div style={rowStyles}> { topHistory[0].map((obj: any) => {
+                  return (
+                    <div key={obj.id} className={`bg-no-repeat bg-cover bg-cener rounded-lg m-2 ${obj.cover_id ? "" : "opacity-50"}`}
+                      style={{backgroundColor: (obj.cover_id ? "" : "#f1f7ed"), minWidth:"6rem", maxWidth:"6rem", height: "8rem", backgroundImage:colorMap[obj.cover_id-1]}}>
+                    </div>
+                  )
+                })}
+              </div>
+
+              <div style={rowStyles}> { topHistory[1].map((obj: any) => {
+                return (
+                  <div key={obj.id} className={`bg-no-repeat bg-cover bg-cener rounded-lg m-2 ${obj.cover_id ? "" : "opacity-50"}`}
+                    style={{backgroundColor: (obj.cover_id ? "" : "#f1f7ed"), minWidth:"6rem", maxWidth:"6rem", height: "8rem", backgroundImage:colorMap[obj.cover_id-1]}}>
+                  </div>
+                )
               })}
-            </div>
-            <div style={rowStyles}> {topHistory[1].map((obj: any) => {
-              return <div key={obj.id} className={`bg-no-repeat bg-cover bg-cener rounded-lg m-2 ${obj.cover_id ? "" : "opacity-50"}`}
-              style={{backgroundColor: (obj.cover_id ? "" : "#f1f7ed"), minWidth:"6rem", maxWidth:"6rem", height: "8rem", backgroundImage:colorMap[obj.cover_id-1]}}></div>
-            })}
-              <div className="flex flex-col justify-center align-center column-center text-center hover:curser-pointer rounded-lg m-2 opacity-50" style={{backgroundColor: "#f1f7ed", minWidth:"6rem", maxWidth:"6rem", height: "8rem"}}> See All Completed Books</div>
-            </div></>) }
+                <div className="flex flex-col justify-center align-center column-center text-center hover:curser-pointer rounded-lg m-2 opacity-50" style={{backgroundColor: "#f1f7ed", minWidth:"6rem", maxWidth:"6rem", height: "8rem"}}> See All Completed Books</div>
+              </div>
+            </>) : (<>
+              <div style={rowStyles}> { historyTemplate[0].map((obj: any) => {
+                  return (
+                    <div key={obj.id} className={`bg-no-repeat bg-cover bg-cener rounded-lg m-2 ${obj.cover_id ? "" : "opacity-50"}`}
+                      style={{backgroundColor: (obj.cover_id ? "" : "#f1f7ed"), minWidth:"6rem", maxWidth:"6rem", height: "8rem", backgroundImage:colorMap[obj.cover_id-1]}}>
+                    </div>
+                  )
+                })}
+              </div>
+
+              <div style={rowStyles}> { historyTemplate[1].map((obj: any) => {
+                return (
+                  <div key={obj.id} className={`bg-no-repeat bg-cover bg-cener rounded-lg m-2 ${obj.cover_id ? "" : "opacity-50"}`}
+                    style={{backgroundColor: (obj.cover_id ? "" : "#f1f7ed"), minWidth:"6rem", maxWidth:"6rem", height: "8rem", backgroundImage:colorMap[obj.cover_id-1]}}>
+                  </div>
+                )
+              })}
+                <div className="flex flex-col justify-center align-center column-center text-center hover:curser-pointer rounded-lg m-2 opacity-50" style={{backgroundColor: "#f1f7ed", minWidth:"6rem", maxWidth:"6rem", height: "8rem"}}> See All Completed Books</div>
+              </div>
+            </>)}
           </div>
         </div>
 
