@@ -1,6 +1,6 @@
 import React, { CSSProperties, useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { setUser, selectUser, selectUserBooks, selectUserHistory, setUserHistory } from '../user/userSlice';
+import { setUser, selectUser, selectUserBooks, selectUserHistory, setUserHistory, setUserCommunity } from '../user/userSlice';
 import { useNavigate } from 'react-router';
 import { httpGetAsync } from '../../utils';
 import { BookDetailModal } from '../bookDetailModal/BookDetailModal';
@@ -62,6 +62,16 @@ export function Left() {
       if (json.err) {
           setHasCommunity(false)
       }
+    });
+  }
+
+  function getCommunityAndNavigate() {
+    console.log("getting community for", user?.username)
+    let url = `http://127.0.0.1:8888/api/v1/getCommunity?name=${user?.username}`;
+    httpGetAsync(url, (res: string) => {
+      let json = JSON.parse(res);
+      dispatch(setUserCommunity(json));
+      navigate("/community");
     });
   }
 
@@ -188,7 +198,13 @@ export function Left() {
         </div>
 
         <div style={{marginTop: 10, padding: "10px 10px 10px 0", width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-            <button style={{color: 'white'}} className="border border-solid border-gray-100 mt-3 p-3 pl-5 pr-5 rounded-md font-bold" onClick={() => navigate(hasCommunity ? "/community" : "/communityAdd")}>Your Community</button>
+            <button style={{color: 'white'}} className="border border-solid border-gray-100 mt-3 p-3 pl-5 pr-5 rounded-md font-bold" onClick={() => {
+              if (!hasCommunity) {
+                navigate("/communityAdd");
+              } else {
+                getCommunityAndNavigate();
+              }
+            }}>Your Community</button>
         </div>
         
         { selectedBook && <div className="flex flex-row bg-themeBlue justify-center align-center content-center text-center rounded-2xl p-4" style={{

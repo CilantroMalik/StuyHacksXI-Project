@@ -72,7 +72,7 @@ export function CommunityHome() {
 
     useEffect(() => {
         console.log("initializing", comm)
-        //getCommunity();
+        // getCommunity();
         populateCollections();
         console.log("done initializing")
     }, [])
@@ -81,7 +81,7 @@ export function CommunityHome() {
         <div style={{width: "100vw", height: "100vh", backgroundImage: "url(/images/bgs/community.png)"}} className="flex flex-col bg-cover bg-no-repeat content-center items-center">
             <div className="h-1/6 w-4/5 flex flex-row justify-left content-center items-center">
                 <h1 className="text-themeSepia text-5xl font-bold">Your community</h1>
-                <button className="text-3xl bg-[#282565] rounded-2xl text-themeSepia pr-6 pl-6 pt-2 pb-2 ml-8">Leave</button>
+                {/* <button className="text-3xl bg-[#282565] rounded-2xl text-themeSepia pr-6 pl-6 pt-2 pb-2 ml-8">Leave</button> */}
             </div>
             <div className="grid grid-rows-3 grid-cols-2 gap-10 justify-around justify-items-stretch w-4/5 h-2/3">
                 {console.log("rendered")}
@@ -93,7 +93,7 @@ export function CommunityHome() {
                             { collections[username] === "empty" ? <h1 className="font-bold text-themeSepia text-3xl">No Books</h1> :
                                 collections[username].slice(0, Math.min(collections[username].length, 3)).map((obj: any) => <>
                                 <h1 key={nanoid()} className="font-bold text-themeSepia text-2xl mb-1">{obj.title}</h1>
-                                <div className="h-3 w-full rounded-md bg-themeSepia mb-4"><div className="h-full rounded-md bg-themeProgress" style={{width: `${obj.progress}%` }}> </div></div>
+                                <div className="h-3 w-full rounded-md bg-themeSepia mb-3"><div className="h-full rounded-md bg-themeProgress" style={{width: `${obj.progress}%` }}> </div></div>
                             </>)}
                         </div>
                     </div>)
