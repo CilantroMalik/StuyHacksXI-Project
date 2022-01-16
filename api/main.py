@@ -236,7 +236,7 @@ def createCommunity():
     if "{" not in content:
         communities = {joinCode: {"members": [a.get("name")], "owner": a.get("name")}}
     else:
-        if a.get("name") in content:
+        if '"' + a.get("name") + '"' in content:
             return jsonify({"err": "Already in a community."})
         communities = json.loads(content)
         communities[joinCode] = {"members": [a.get("name")], "owner": a.get("name")}
@@ -274,7 +274,7 @@ def getCommunity():
         return jsonify({"err": "Not in a community."})
     communities = json.loads(content)
     for code, community in communities.items():
-        if a.get("name") in community["members"]:
+        if '"' + a.get("name") + '"' in community["members"]:
             return jsonify({code: community})
 
 # Removes the given user from the specified community
