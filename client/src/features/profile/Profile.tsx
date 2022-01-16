@@ -10,7 +10,8 @@ export function Profile() {
   let user = useAppSelector(selectUser);
 
   useEffect(() => {
-    if (!user || !user.signedIn) {
+    console.log("PROFILE–", user);
+    if (!user || !(user.signedIn)) {
       navigate("/signin");
     }
   }, []);

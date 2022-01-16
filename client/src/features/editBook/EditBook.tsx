@@ -17,8 +17,7 @@ export function EditBook({id}: {id: string}) {
     function submit(e: any): void {
         e.preventDefault();
 
-        // @ts-ignore
-        let url = `http://127.0.0.1:8888/api/v1/addPages?name=${user.username}&id=${id}&pages=${pagesToAdd}`
+        let url = `http://127.0.0.1:8888/api/v1/addPages?name=${user?.username}&id=${id}&pages=${pagesToAdd}`
 
         httpGetAsync(url, (res: string) => {
             let json = JSON.parse(res);

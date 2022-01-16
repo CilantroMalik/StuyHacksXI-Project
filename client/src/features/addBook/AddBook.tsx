@@ -33,7 +33,7 @@ export function AddBook() {
                 console.error(json.err);
             } else {
                 dispatch(setUserBooks(json));
-                navigate("/profile");
+                navigate("/home");
             }
         });
 
@@ -52,17 +52,17 @@ export function AddBook() {
                     <button className="m-5 w-20 h-20 bg-themeGray rounded-lg" onClick={() => setCover(4)}></button>
                 </div>
                 <form className="w-1/3 flex flex-col justify-center content-center items-center" onSubmit={submit}>
-                    <div className="flex flex-row justify-between align-center place-content-center w-full">
-                      <h1 className="mt-5 text-2xl font-bold text-themeSepia mr-4">Title</h1>
-                      <input id="title" className="mt-6 mb-6 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md py-2 pl-1.5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" style={{backgroundColor: "#e6f0e3"}} placeholder="Enter title of book" type="text"/>
+                    <div className="flex flex-row justify-center items-center place-content-center content-center w-full">
+                      <h1 className="m-5 text-2xl font-bold text-themeSepia text-center">Title</h1>
+                      <input id="title" className="mt-6 mb-6 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-lg py-2 pl-1.5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" style={{backgroundColor: "#e6f0e3"}} placeholder="Enter title of book" type="text"/>
                     </div>
-                    <div className="flex flex-row justify-between align-center place-content-center w-full">
-                      <h3 className=" mt-5 text-2xl font-semibold mr-4 text-themeSepia">Author</h3>
-                      <input id="author" className="mt-6 mb-6 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md py-2 pl-1.5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" style={{backgroundColor: "#e6f0e3"}} placeholder="Enter author of book" type="text"/>
+                    <div className="flex flex-row justify-center items-center place-content-center content-center w-full">
+                      <h3 className=" m-5 text-2xl font-semibold text-themeSepia">Author</h3>
+                      <input id="author" className="mt-6 mb-6 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-lg py-2 pl-1.5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" style={{backgroundColor: "#e6f0e3"}} placeholder="Enter author of book" type="text"/>
                     </div>
-                    <div className="flex flex-row justify-between align-center place-content-center w-full">
-                      <h2 className="mt-5 text-2xl font-semibold mr-4 text-themeSepia">Pages</h2>
-                      <input id="pages" className="mt-6 mb-6 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md py-2 pl-1.5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" style={{backgroundColor: "#e6f0e3"}} placeholder="Enter total # of pages" type="number"/>
+                    <div className="flex flex-row justify-center items-center place-content-center content-center w-full">
+                      <h2 className="m-5 text-2xl font-semibold text-themeSepia">Pages</h2>
+                      <input id="pages" className="mt-6 mb-6 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-lg py-2 pl-1.5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" style={{backgroundColor: "#e6f0e3"}} placeholder="Enter total # of pages" type="number"/>
                     </div>
                     <button className="border border-solid border-gray-600 mt-3 p-1.5 pl-5 pr-5 rounded-md font-bold text-themeSepia" type="submit">Add book</button>
                 </form>

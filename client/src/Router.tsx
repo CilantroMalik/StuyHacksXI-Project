@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router';
 function ResetState() {
   let dispatch = useAppDispatch();
   let user = useAppSelector(selectUser);
+  let navigate = useNavigate();
   const [cookies, setCookie] = useCookies(["user"])
 
   function resetState() {
@@ -21,9 +22,16 @@ function ResetState() {
   }
 
   useEffect(() => {
+    console.log("RESETTING STATE")
     resetState()
-    if (cookies["user"] != "undefined") {
+    console.log("COOKIE VALUE", cookies["user"])
+    if (cookies["user"] != undefined) {
         dispatch(setUser({username: cookies["user"], signedIn: true}))
+        console.log("ROUTING TO HOME")
+        navigate("/home");
+    } else {
+        console.log("ROUTING TO SIGNIN")
+        navigate("/signin");
     }
   }, []);
 
