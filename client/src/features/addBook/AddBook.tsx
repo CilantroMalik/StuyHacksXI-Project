@@ -15,13 +15,11 @@ export function AddBook() {
     const colorMap = ["url(/images/covers/red.png)", "url(/images/covers/yellow.png)", "url(/images/covers/green.png)", "url(/images/covers/gray.png)"]
 
     function submit(e: any): void {
-        console.log("submitted")
         e.preventDefault();
 
         let title = encodeURI(e.target.title.value)
         let author = encodeURI(e.target.author.value)
         let pages = encodeURI(e.target.pages.value)
-        console.log(title, author, pages)
 
         let url = `http://127.0.0.1:8888/api/v1/newBook?name=${user?.username}&title=${title}&author=${author}&pages=${pages}&cover_id=${cover}`
 

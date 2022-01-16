@@ -6,7 +6,7 @@ export function LandingPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col justify-center items-center content-center" style={{width: "100vw", height: "100vh", backgroundImage: "url(/images/bgs/landing.png)"}}>
+    <div className="flex flex-col justify-center items-center content-center bg-no-repeat bg-cover bg-center" style={{width: "100vw", height: "100vh", backgroundImage: "url(/images/bgs/landing.png)"}}>
       <div className="text-center mb-16">
         <h1 className="text-9xl font-bold text-themeSepia">book it!</h1>
         <h1 className="text-4xl text-themeSepia">don't run from reading</h1>

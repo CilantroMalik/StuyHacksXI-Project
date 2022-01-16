@@ -20,9 +20,6 @@ export function EditBook() {
     let [cover, setCover] = useState(1);
 
     useEffect(() => {
-      // setCurrentBook({...userBooks[id]});
-      // @ts-ignore
-      console.log("EDIT", userBooks[id]);
       setCover(userBooks[id].cover_id);
     }, []);
 

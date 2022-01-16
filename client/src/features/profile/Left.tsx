@@ -1,22 +1,19 @@
 import React, { CSSProperties, useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { setUser, selectUser } from '../user/userSlice';
+import { setUser, selectUser, selectUserBooks, selectUserHistory, setUserHistory } from '../user/userSlice';
 import { useNavigate } from 'react-router';
 import { httpGetAsync } from '../../utils';
 
 export function Left() {
   let navigate = useNavigate();
+  let dispatch = useAppDispatch();
   let user = useAppSelector(selectUser);
-  let [stats, setStats]: [any, any] = useState(null);
+  let history: any = useAppSelector(selectUserHistory);
+  let userBooks: any = useAppSelector(selectUserBooks);
+  let [stats, setStats]: any = useState(null);
+  let [topHistory, setTopHistory]: any = useState(null);
 
-  useEffect(() => {
-    let url = `http://127.0.0.1:8888/api/v1/getStats?name=${user?.username}`;
-    httpGetAsync(url, (res: string) => {
-      let json = JSON.parse(res);
-      console.log("STATS", json);
-      setStats(json);
-    });
-  }, []);
+  const colorMap = ["url(/images/covers/red.png)", "url(/images/covers/yellow.png)", "url(/images/covers/green.png)", "url(/images/covers/gray.png)"]
 
   const leftStyles: CSSProperties = {
     flex: 0.4,
@@ -43,6 +40,42 @@ export function Left() {
     padding: '20px 20px'
   }
 
+  function getStats() {
+    let url = `http://127.0.0.1:8888/api/v1/getStats?name=${user?.username}`;
+    httpGetAsync(url, (res: string) => {
+      let json = JSON.parse(res);
+      setStats(json);
+    });
+  }
+
+  function getHistory() {
+    let url = `http://127.0.0.1:8888/api/v1/getHistory?name=${user?.username}`;
+    httpGetAsync(url, (res: string) => {
+      let json = JSON.parse(res);
+      if (json.err) {
+        console.error("HISTORY", json.err);
+        dispatch(setUserHistory([]));
+        return;
+      }
+      dispatch(setUserHistory(json));
+    });
+  }
+
+  useEffect(() => {
+    getStats();
+    getHistory();
+  }, []);
+
+  useEffect(() => {
+    let newTopHistory = topHistory !== null ? topHistory : [[{id: 1}, {id: 2}, {id: 3}, {id: 4}], [{id: 5}, {id: 6}, {id: 7}]];
+    for (let i = 0; i < 7; i++) {
+      if (i >= history.length) break;
+      if (i < 4) newTopHistory[0][i] = history[i];
+      else newTopHistory[1][i-4] = history[i];
+      setTopHistory(newTopHistory);
+    }
+  }, [history]);
+
   return (
       <div style={leftStyles}>
         <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
@@ -57,7 +90,7 @@ export function Left() {
             Total Books Read 
           </h1>
           <h1 className="text-xl font-bold mr-0" style={{color: "#f1f7ed", textAlign: 'right'}}>
-            {12}
+            {stats !== null ? stats.booksRead : "N/A"}
           </h1>
         </div>
 
@@ -75,7 +108,7 @@ export function Left() {
             Pages Read 
           </h1>
           <h1 className="text-xl font-bold mr-0" style={{color: "#f1f7ed", textAlign: 'right'}}>
-            {12}
+            {stats !== null ? stats.pagesRead : "N/A"}
           </h1>
         </div>
 
@@ -86,8 +119,17 @@ export function Left() {
             </h1>
           </div>
           <div className="rounded-lg" style={{backgroundColor: "#37337a"}}>
-            <div style={rowStyles}> {[0, 1, 2, 3].map(i => <div key={i} style={{backgroundColor: "#f1f7ed", width: 100, height: 120}}></div>)} </div>
-            <div style={rowStyles}> {[0, 1, 2, 3].map(i => <div key={i} style={{backgroundColor: "#f1f7ed", width: 100, height: 120}}></div>)} </div>
+            { topHistory !== null && (<><div style={rowStyles}> {topHistory[0].map((obj: any) => {
+                return <div key={obj.id} className={`bg-no-repeat bg-cover bg-cener rounded-lg m-2 ${obj.cover_id ? "" : "opacity-50"}`}
+                style={{backgroundColor: (obj.cover_id ? "" : "#f1f7ed"), minWidth:"6rem", maxWidth:"6rem", height: "8rem", backgroundImage:colorMap[obj.cover_id-1]}}></div>
+              })}
+            </div>
+            <div style={rowStyles}> {topHistory[1].map((obj: any) => {
+              return <div key={obj.id} className={`bg-no-repeat bg-cover bg-cener rounded-lg m-2 ${obj.cover_id ? "" : "opacity-50"}`}
+              style={{backgroundColor: (obj.cover_id ? "" : "#f1f7ed"), minWidth:"6rem", maxWidth:"6rem", height: "8rem", backgroundImage:colorMap[obj.cover_id-1]}}></div>
+            })}
+              <div className="flex flex-col justify-center align-center column-center text-center hover:curser-pointer rounded-lg m-2 opacity-50" style={{backgroundColor: "#f1f7ed", minWidth:"6rem", maxWidth:"6rem", height: "8rem"}}> See All Completed Books</div>
+            </div></>) }
           </div>
         </div>
 

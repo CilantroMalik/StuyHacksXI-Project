@@ -1,4 +1,4 @@
-import React, { CSSProperties, useEffect } from 'react';
+import React, { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { setUser, setUserBooks, selectUser, selectUserBooks } from '../user/userSlice';
 import { useNavigate } from 'react-router';
@@ -10,7 +10,6 @@ export function Profile() {
   let user = useAppSelector(selectUser);
 
   useEffect(() => {
-    console.log("PROFILE–", user);
     if (!user || !(user.signedIn)) {
       navigate("/signin");
     }
@@ -19,7 +18,7 @@ export function Profile() {
   return (
     <div style={{width: "100vw", height: "100vh", display: "flex", backgroundColor: "#f1f7ed"}}>
       <Left />
-      <Right/>
+      <Right />
     </div>
   );
 }
