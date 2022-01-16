@@ -12,7 +12,9 @@ export function Right() {
   let dispatch = useAppDispatch();
   let userBooks: any = useAppSelector(selectUserBooks);
   // let userBooks: any = {"a": {title: "title"}, "b": {title: "title"}, "c": {title: "title"}, "d": {title: "title"}, "history": {}};
-  
+
+  const colorMap = ["url(/images/covers/red.png)", "url(/images/covers/yellow.png)", "url(/images/covers/green.png)", "url(/images/covers/gray.png)"]
+
   useEffect(() => {
     let url = `http://127.0.0.1:8888/api/v1/getCollection?name=${user?.username}`
     httpGetAsync(url, (res: string) => {
@@ -40,7 +42,7 @@ export function Right() {
       </h1>
 
       { Object.keys(userBooks).filter(k => k !== "history").map(i => <div key={i} style={{display: 'flex', flexDirection: 'row', alignItems: 'start', marginTop: 30}}>
-        <div style={{width: 100, height: 120, backgroundColor: "#37337a"}}></div>
+        <div style={{width: "10rem", height: "14rem", backgroundImage: colorMap[userBooks[i].cover_id-1]}} className="bg-no-repeat bg-cover"></div>
         <div className="ml-4" style={{display: 'flex', flexDirection: 'column', justifyContent: "space-evenly", width: "100%", height: "100%"}}>
           <div style={{display: 'flex', flexDirection: 'row', alignItems: 'start'}}>
             <h1 className="text-2xl font-bold" style={{color: "#201e50"}}>
