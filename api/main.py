@@ -45,7 +45,7 @@ def register():
     #     books = json.load(bookFile)
     #     books[name] = ""
     #     json.dump(books, bookFile)
-    return jsonify({"feedback": f"Successfully registered user '{name}'", "name": name, "avatar" avatar})
+    return jsonify({"feedback": f"Successfully registered user '{name}'", "name": name, "avatar": avatar})
 
 # Logs in a user
 # Query args: name, pwd
