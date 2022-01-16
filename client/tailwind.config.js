@@ -11,7 +11,8 @@ module.exports = {
         "themeGray": "#565656",
         "themeBlue": "#201e50",
         "themeSepia": "#f1f7ed",
-        "themeProgress": "#eb5160"
+        "themeProgress": "#eb5160",
+        "themeField": "#e6f0e3"
       }
     },
   },

@@ -66,16 +66,16 @@ export function SignUp() {
   return (
     <div style={pageStyles}>
       <div style={cardStyle}>
-        <div style={{flex: 1, display: "flex", alignItems: "center", width: "100%"}}>
-          <form style={{margin: "10px", display: "flex", flexDirection: "column", alignItems: "start", flex: 1}} onSubmit={submit}>
+        <div className="flex flex-row flex-1 items-center w-full"> {/* style={{flex: 1, display: "flex", alignItems: "center", width: "100%"}} */}
+          <form className="flex flex-col flex-1 m-3 items-start" onSubmit={submit}> {/* style={{margin: "10px", display: "flex", flexDirection: "column", alignItems: "start", flex: 1}} */}
             <h1 className="text-3xl font-bold">
               Create an Account
             </h1>
-            { errorMessage !== null && <div className="mt-6 bg-red-200" style={{width: "100%", padding: "20px"}}>
+            { errorMessage !== null && <div className="mt-6 bg-red-200 w-full m-5">
               <p>{errorMessage}</p>
             </div> }
-            <input id="username" className="mt-6 ml-0 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md py-2 pl-1.5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" style={{backgroundColor: "#e6f0e3"}} placeholder="Username" type="text" name="search"/>
-            <input id="password" className="mt-6 ml-0 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md py-2 pl-1.5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" style={{backgroundColor: "#e6f0e3"}} placeholder="Password" type="password" name="search"/>
+            <input id="username" className="mt-6 ml-0 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md py-2 pl-1.5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm bg-themeField" placeholder="Username" type="text" name="search"/>
+            <input id="password" className="mt-6 ml-0 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md py-2 pl-1.5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm bg-themeField" placeholder="Password" type="password" name="search"/>
             <small className="mt-6"> Already have an account? <button onClick={() => navigate("/signin")} className="text-slate-600 hover:cursor-pointer font-bold">Login.</button></small>
             <button className="border border-solid border-gray-600 mt-3 p-1.5 pl-5 pr-5 rounded-md hover:bg-gray-100 font-bold" type="submit">Continue</button>
           </form>

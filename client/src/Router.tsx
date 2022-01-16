@@ -4,8 +4,8 @@ import { SignIn } from './features/signin/SignIn';
 import { SignUp } from './features/signup/SignUp';
 import { Profile } from './features/profile/Profile';
 import { AddBook } from './features/addBook/AddBook';
+import { useCookies } from "react-cookie";
 import { EditBook } from './features/editBook/EditBook';
-
 import { useAppSelector, useAppDispatch } from './app/hooks';
 import { setUser, selectUser } from './features/user/userSlice';
 import { useNavigate } from 'react-router';
@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router';
 function ResetState() {
   let dispatch = useAppDispatch();
   let user = useAppSelector(selectUser);
+  const [cookies, setCookie] = useCookies(["user"])
 
   function resetState() {
     dispatch(setUser(null))
@@ -21,6 +22,9 @@ function ResetState() {
 
   useEffect(() => {
     resetState()
+    if (cookies["user"] != "undefined") {
+        dispatch(setUser({username: cookies["user"], signedIn: true}))
+    }
   }, []);
 
   return (
@@ -38,9 +42,9 @@ function Router() {
       * if no user signed in, render the landing page
       * otherwise take the user to their dashboard
       */ }
-      <Route path="/" element={<ResetState/>}/>
-      <Route path="/signin" element={<SignIn/>}/>
-      <Route path="/signup" element={<SignUp/>}/>
+      <Route path="/" element={<ResetState />}/>
+      <Route path="/signin" element={<SignIn />}/>
+      <Route path="/signup" element={<SignUp />}/>
       <Route path="/home" element={<Profile />}/>
       <Route path="/addBook" element={<AddBook />}/>
       {/* <Route path="/editBook" element={<EditBook />}/> */}
