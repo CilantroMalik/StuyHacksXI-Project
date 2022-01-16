@@ -13,6 +13,8 @@ export function CommunityHome() {
     let [collections, setCollections]: any = useState({})
     let navigate = useNavigate()
 
+    let [userInfo, setUserInfo] = useState([]);
+
     function getCommunity() {
         let url = `http://127.0.0.1:8888/api/v1/getCommunity?name=${user?.username}`;
         httpGetAsync(url, (res: string) => {
@@ -75,6 +77,8 @@ export function CommunityHome() {
         // getCommunity();
         populateCollections();
         console.log("done initializing")
+
+
     }, [])
 
     return (
@@ -88,7 +92,7 @@ export function CommunityHome() {
                 {Object.keys(collections).slice(page === 1 ? 0 : 6, page === 1 ? Math.min(Object.keys(collections).length, 6) : Math.min(Object.keys(collections).length, 12)).map((username: any) => {
                     console.log("mapping", username)
                     return (<div key={nanoid()} className="flex flex-row justify-center content-center items-center bg-[#282565] rounded-xl justify-items-stretch">
-                        <div className="flex bg-themeSepia rounded-full ml-10 justify-center content-center items-center" style={{width: "15vh", height: "11vh"}}><p>{username}</p></div>
+                        <div className="flex bg-themeSepia rounded-full ml-10 justify-center content-center items-center" style={{width: "15vh", height: "11vh", backgroundImage: `url(/images/avatars/avatar${user?.avatar}.png)`}}><p>{username}</p></div>
                         <div className="flex flex-col justify-evenly p-10 w-full">
                             { collections[username] === "empty" ? <h1 className="font-bold text-themeSepia text-3xl">No Books</h1> :
                                 collections[username].slice(0, Math.min(collections[username].length, 3)).map((obj: any) => <>

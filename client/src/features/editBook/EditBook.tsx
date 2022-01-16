@@ -6,7 +6,7 @@ import { httpGetAsync } from "../../utils";
 
 export function EditBook() {
     let user = useAppSelector(selectUser)
-    let userBooks: any = useAppSelector(selectUserBooks)
+    let userBooks: any = useAppSelector(selectUserBooks);
     let navigate = useNavigate();
     const location: any = useLocation()
     let [pagesToAdd, _setPagesToAdd] = useState(0);
@@ -59,8 +59,8 @@ export function EditBook() {
                         <button type="button" className="rounded-xl border border-solid p-2 w-1/3 m-3 border-themeSepia text-themeSepia" onClick={() => setPagesToAdd(pagesToAdd+50)}>+50</button>
                     </div>
                     <div className="mt-5 w-full h-5 bg-themeSepia rounded-md">
-                        <div className="h-full bg-themeProgress rounded-md" style={{width: `${100*(userBooks[id]?.currentPages+pagesToAdd)/userBooks[id]?.pages}%`}}>
-                            <div className="h-full bg-[#443f8e] rounded-md" style={{width: `${100*userBooks[id]?.currentPages/(userBooks[id]?.currentPages + pagesToAdd)}%`}}></div>
+                        <div className="h-full bg-themeProgress rounded-md" style={{width: `${100*(userBooks[id]?.currentPages+pagesToAdd)/userBooks[id]?.pages}%`, transition: "width 0.3s ease-out"}}>
+                            <div className="h-full bg-[#443f8e] rounded-md" style={{width: `${100*userBooks[id]?.currentPages/(userBooks[id]?.currentPages + pagesToAdd)}%`, transition: "width 2s"}}></div>
                         </div>
                     </div>
                     <div className="mt-7">
