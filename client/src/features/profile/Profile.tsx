@@ -1,6 +1,6 @@
 import React, { CSSProperties, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { setUser, selectUser } from '../user/userSlice';
+import { setUser, setUserBooks, selectUser, selectUserBooks } from '../user/userSlice';
 import { useNavigate } from 'react-router';
 import { Left } from './Left';
 import { Right } from './Right';

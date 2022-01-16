@@ -35,6 +35,12 @@ export function Right() {
     return Object.keys(userBooks).length;
   }
 
+  function editBook(id: string) {
+    navigate("/editBook", {
+      state: {id}
+    });
+  }
+
   return (
     <div style={{padding: 60, flex: 0.6}}>
       <h1 className="text-2xl font-bold" style={{color: "#201e50"}}>
@@ -42,7 +48,7 @@ export function Right() {
       </h1>
 
       { Object.keys(userBooks).filter(k => k !== "history").map(i => <div key={i} style={{display: 'flex', flexDirection: 'row', alignItems: 'start', marginTop: 30}}>
-        <div style={{width: "10rem", height: "14rem", backgroundImage: colorMap[userBooks[i].cover_id-1]}} className="bg-no-repeat bg-cover"></div>
+        <div style={{width: "10rem", height: "14rem", backgroundImage: colorMap[userBooks[i].cover_id-1]}} onClick={() => editBook(i)} className="hover:cursor-pointer bg-no-repeat bg-cover"></div>
         <div className="ml-4" style={{display: 'flex', flexDirection: 'column', justifyContent: "space-evenly", width: "100%", height: "100%"}}>
           <div style={{display: 'flex', flexDirection: 'row', alignItems: 'start'}}>
             <h1 className="text-2xl font-bold" style={{color: "#201e50"}}>
