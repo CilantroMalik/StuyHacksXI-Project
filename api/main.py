@@ -248,7 +248,7 @@ def createCommunity():
         communities[joinCode] = {"members": [a.get("name")], "owner": a.get("name")}
     with open("./community.json", mode='w') as commFile:
         json.dump(communities, commFile)
-    return jsonify({"feedback": "Community created!"})
+    return jsonify({joinCode: communities[joinCode]})
 
 # Joins a community with a provided join code
 # Query args: name, code
@@ -266,7 +266,7 @@ def joinCommunity():
     communities[a.get("code")]["members"].append(a.get("name"))
     with open("./community.json", mode='w') as commFile:
         json.dump(communities, commFile)
-    return jsonify({"feedback": "Joined community!"})
+    return jsonify({a.get("code"): communities[a.get("code")]})
 
 # Returns information for the user's community
 # Query args: name
