@@ -1,13 +1,16 @@
 import React, { CSSProperties, useState, useEffect } from 'react';
 import { httpGetAsync } from '../../utils';
-import { useAppDispatch } from '../../app/hooks';
-import { setUser } from '../user/userSlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { selectUser, setUser } from '../user/userSlice';
 import { useNavigate } from 'react-router';
+import { useCookies } from "react-cookie";
 
 export function SignUp() {
   let navigate = useNavigate();
   let dispatch = useAppDispatch();
+  let user = useAppSelector(selectUser);
   let [errorMessage, setErrorMessage] = useState(null);
+  const [cookies, setCookie, removeCookie] = useCookies(["user"])
 
   const cardStyle: CSSProperties = {
       backgroundColor: '#f1f7ed',
@@ -41,7 +44,7 @@ export function SignUp() {
         console.error(json.err);
       }
       removeCookie("user");
-      dispatch(setUser({ username: null, signedIn: false }));
+      dispatch(setUser({ username: null, signedIn: false, avatar: null }));
     });
   }
 
@@ -70,10 +73,7 @@ export function SignUp() {
   }
 
   useEffect(() => {
-    //TODO: we cannot let this stay as is; probably just don't allowed logged
-    // in users to access this route at all
     signOut();
-    dispatch(setUser({username: null, signedIn: false}));
   }, []);
 
   return (

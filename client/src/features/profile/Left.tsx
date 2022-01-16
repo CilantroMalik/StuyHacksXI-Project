@@ -30,7 +30,7 @@ export function Left() {
 
   const circleStyles: CSSProperties = {
     borderRadius: 164/2,
-    backgroundColor: '#f1f7ed',
+    // backgroundColor: '#f1f7ed',
     width: "164px",
     height: "164px",
   }
@@ -67,6 +67,7 @@ export function Left() {
   useEffect(() => {
     getStats();
     getHistory();
+    console.log(user);
   }, []);
 
   useEffect(() => {
@@ -84,7 +85,7 @@ export function Left() {
   return (
       <div style={leftStyles}>
         <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
-          <div style={circleStyles}></div>
+          <div className="bg-no-repeat bg-center bg-cover" style={{...circleStyles, backgroundImage: `url(/images/avatars/avatar${user?.avatar}.png)`}}></div>
           <h1 className="text-4xl font-bold ml-12" style={{color: "#f1f7ed"}}>
             {user?.username}
           </h1>

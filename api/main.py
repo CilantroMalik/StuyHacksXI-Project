@@ -59,6 +59,9 @@ def login():
         if f"{name},{pwd}" not in "".join(users.readlines()):
             return jsonify({"err": f"Error: invalid username/password combination '{name}'/'{pwd}'."})
         else:
+            avatar = 1
+            for line in users.readlines():
+                pass
             if name not in currently_logged_in:
                 currently_logged_in.append(name)
             return jsonify({"name": name, "avatar": avatar})

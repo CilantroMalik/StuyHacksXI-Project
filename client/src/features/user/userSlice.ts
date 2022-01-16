@@ -2,7 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 
 interface UserState {
-  user: { username: string, signedIn: boolean } | null; 
+  user: {
+    username: string,
+    signedIn: boolean,
+    avatar: number,
+  } | null; 
   books: {};
   community: {};
   history: any[];

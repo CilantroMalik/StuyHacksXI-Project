@@ -75,7 +75,7 @@ export function Right() {
         console.error(json.err);
       }
       removeCookie("user");
-      dispatch(setUser({ username: null, signedIn: false }));
+      dispatch(setUser({ username: null, signedIn: false, avatar: null }));
       navigate("/");
     });
   }

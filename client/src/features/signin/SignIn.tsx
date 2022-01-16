@@ -23,7 +23,7 @@ export function SignIn() {
       textAlign: "left",
       display: "flex",
       position: "absolute",
-    };
+  };
 
   const pageStyles: CSSProperties = {
     backgroundImage: `url(/images/bgs/signIn.png)`,
@@ -44,7 +44,7 @@ export function SignIn() {
         console.error(json.err);
       }
       removeCookie("user");
-      dispatch(setUser({ username: null, signedIn: false }));
+      dispatch(setUser({ username: null, signedIn: false, avatar: null }));
     });
   }
 
@@ -58,15 +58,17 @@ export function SignIn() {
 
     httpGetAsync(url, (res: string) => {
       let json = JSON.parse(res);
-      let name = json.name;
+      let { name, avatar } = json;
+      console.log(json, avatar);
       
-      if (json.err && json.err.indexOf("already logged in") === -1) {
+      if (json.err) {
         console.error(json.err);
         setErrorMessage(json.err);
       } else {
         dispatch(setUser({
           username: name,
           signedIn: true,
+          avatar, 
         }));
         setCookie("user", name, {path: '/'})
         navigate("/home");
@@ -79,7 +81,7 @@ export function SignIn() {
 
   useEffect(() => {
     signOut();
-    dispatch(setUser({username: null, signedIn: false}));
+    dispatch(setUser({username: null, signedIn: false, avatar: null}));
   }, []);
 
   return (
