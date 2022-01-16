@@ -71,7 +71,7 @@ export function SignUp() {
             <h1 className="text-3xl font-bold">
               Create an Account
             </h1>
-            { errorMessage !== null && <div className="mt-6 bg-red-200 w-full m-5">
+            { errorMessage !== null && <div className="rounded-md mt-6 bg-red-200 w-full p-5">
               <p>{errorMessage}</p>
             </div> }
             <input id="username" className="mt-6 ml-0 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md py-2 pl-1.5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm bg-themeField" placeholder="Username" type="text" name="search"/>

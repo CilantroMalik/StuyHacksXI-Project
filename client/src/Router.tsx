@@ -8,7 +8,7 @@ import { useCookies } from "react-cookie";
 import { EditBook } from './features/editBook/EditBook';
 import { useAppSelector, useAppDispatch } from './app/hooks';
 import { setUser, selectUser } from './features/user/userSlice';
-import { useNavigate } from 'react-router';
+import { Navigate, useNavigate } from 'react-router';
 import { LandingPage } from './features/landingPage/landingPage';
 import { CommunityHome } from "./features/communityHome/CommunityHome";
 import { OtherProfile } from "./features/otherProfile/OtherProfile";
@@ -41,7 +41,18 @@ function ResetState() {
   )
 }
 
+function Redirect({path}: any) {
+  let navigate = useNavigate();
+  useEffect(() => {
+    navigate(path);
+  }, []);
+  return <></>
+}
+
 function Router() {
+  let user = useAppSelector(selectUser);
+  let navigate = useNavigate();
+
   return (
     <Routes>
       {/* TODO:
@@ -51,7 +62,7 @@ function Router() {
       */ }
       <Route path="/" element={<ResetState />}/>
       <Route path="/welcome" element={<LandingPage />}/>
-      <Route path="/signin" element={<SignIn />}/>
+      <Route path="/signin" element={<SignIn/>}/>
       <Route path="/signup" element={<SignUp />}/>
       <Route path="/home" element={<Profile />}/>
       <Route path="/addBook" element={<AddBook />}/>
