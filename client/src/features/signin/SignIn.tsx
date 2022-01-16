@@ -78,8 +78,6 @@ export function SignIn() {
   }
 
   useEffect(() => {
-    //TODO: we cannot let this stay as is; probably just don't allowed logged
-    // in users to access this route at all
     signOut();
     dispatch(setUser({username: null, signedIn: false}));
   }, []);

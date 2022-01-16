@@ -33,11 +33,17 @@ export function SignUp() {
     display: "flex",
   };
 
-  useEffect(() => {
-    //TODO: we cannot let this stay as is; probably just don't allowed logged
-    // in users to access this route at all
-    dispatch(setUser({username: null, signedIn: false}));
-  }, []);
+  function signOut() {
+    const url = `http://127.0.0.1:8888/api/v1/logout?name=${user?.username}`;
+    httpGetAsync(url, (res: string) => {
+      let json = JSON.parse(res);
+      if (json.err) {
+        console.error(json.err);
+      }
+      removeCookie("user");
+      dispatch(setUser({ username: null, signedIn: false }));
+    });
+  }
 
   function submit(e: any): void {
     e.preventDefault();
@@ -62,6 +68,13 @@ export function SignUp() {
     e.target.username.value = "";
     e.target.username.password = "";
   }
+
+  useEffect(() => {
+    //TODO: we cannot let this stay as is; probably just don't allowed logged
+    // in users to access this route at all
+    signOut();
+    dispatch(setUser({username: null, signedIn: false}));
+  }, []);
 
   return (
     <div style={pageStyles}>
