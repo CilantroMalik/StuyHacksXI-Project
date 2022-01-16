@@ -4,6 +4,7 @@ import { SignIn } from './features/signin/SignIn';
 import { SignUp } from './features/signup/SignUp';
 import { Profile } from './features/profile/Profile';
 import { AddBook } from './features/addBook/AddBook';
+import { EditBook } from './features/editBook/EditBook';
 
 import { useAppSelector, useAppDispatch } from './app/hooks';
 import { setUser, selectUser } from './features/user/userSlice';
@@ -42,6 +43,7 @@ function Router() {
       <Route path="/signup" element={<SignUp/>}/>
       <Route path="/home" element={<Profile />}/>
       <Route path="/addBook" element={<AddBook />}/>
+      {/* <Route path="/editBook" element={<EditBook />}/> */}
     </Routes>
   );
 }
