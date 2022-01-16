@@ -167,7 +167,7 @@ export function Left() {
         </div>
 
         <div style={{marginTop: 10, padding: "10px 10px 10px 0", width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-            <button style={{color: 'white'}} className="border border-solid border-gray-100 mt-3 p-3 pl-5 pr-5 rounded-md font-bold">Your Community</button>
+            <button style={{color: 'white'}} className="border border-solid border-gray-100 mt-3 p-3 pl-5 pr-5 rounded-md font-bold" onClick={() => navigate("/community")}>Your Community</button>
         </div>
 
       </div>
