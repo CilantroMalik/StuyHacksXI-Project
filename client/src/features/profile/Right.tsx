@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { httpGetAsync } from '../../utils';
+import { useCookies } from "react-cookie";
 
 export function Right() {
   let navigate = useNavigate();
@@ -12,6 +13,7 @@ export function Right() {
   let dispatch = useAppDispatch();
   let userBooks: any = useAppSelector(selectUserBooks);
   const colorMap = ["url(/images/covers/red.png)", "url(/images/covers/yellow.png)", "url(/images/covers/green.png)", "url(/images/covers/gray.png)"]
+  let [_, __, removeCookie] = useCookies(["user"]);
 
   function getBooks() {
     let url = `http://127.0.0.1:8888/api/v1/getCollection?name=${user?.username}`
@@ -65,10 +67,24 @@ export function Right() {
     });
   }
 
+  function signOut() {
+    const url = `http://127.0.0.1:8888/api/v1/logout?name=${user?.username}`;
+    httpGetAsync(url, (res: string) => {
+      let json = JSON.parse(res);
+      if (json.err) {
+        console.error(json.err);
+      }
+      removeCookie("user");
+      dispatch(setUser({ username: null, signedIn: false }));
+      navigate("/");
+    });
+  }
+
   useEffect(getBooks, []);
 
   return (
     <div style={{padding: 60, flex: 0.6}}>
+      <button className="fixed top-5 right-5 text-themeBlue font-bold" onClick={signOut}>Sign Out</button>
       <h1 className="text-2xl font-bold" style={{color: "#201e50"}}>
         Current Books
       </h1>
