@@ -42,7 +42,7 @@ export function AddBook() {
     }
 
     return (
-        <div style={{width: "100vw", height: "100vh"}} className="bg-themeBlue">
+        <div style={{width: "100vw", height: "100vh", backgroundImage: `url(/bgs/addBook.png)`}}>
             <div className="flex flex-col justify-center content-center items-center">
                 <div style={{width: "10vw", height: "25vh"}} className={`m-10 bg-${colorMap[cover-1]}`}></div>
                 <div className="flex flex-row justify-center content-center items-center">

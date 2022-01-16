@@ -23,7 +23,7 @@ export function SignUp() {
     };
 
   const pageStyles: CSSProperties = {
-    backgroundColor: '#f1f7ed',
+    backgroundImage: `url(/images/bgs/signUp.png)`,
     width: "100vw",
     height: "100vh",
     position: "absolute", top: 0,

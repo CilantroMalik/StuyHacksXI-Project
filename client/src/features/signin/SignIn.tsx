@@ -25,7 +25,7 @@ export function SignIn() {
     };
 
   const pageStyles: CSSProperties = {
-    backgroundColor: '#f1f7ed',
+    backgroundImage: `url(/images/bgs/signIn.png)`,
     width: "100vw",
     height: "100vh",
     position: "absolute", top: 0,
