@@ -13,6 +13,7 @@ export function Left() {
   let [stats, setStats]: any = useState(null);
   let [topHistory, setTopHistory]: any = useState(null);
   let [noHistory, setNoHistory]: any = useState(false);
+  let [hasCommunity, setHasCommunity]: any = useState(true)
 
   const colorMap = ["url(/images/covers/red.png)", "url(/images/covers/yellow.png)", "url(/images/covers/green.png)", "url(/images/covers/gray.png)"]
   const historyTemplate = [[{id: 1}, {id: 2}, {id: 3}, {id: 4}], [{id: 5}, {id: 6}, {id: 7}]];
@@ -50,6 +51,18 @@ export function Left() {
     });
   }
 
+  function getCommunity() {
+    console.log("getting community for", user?.username)
+    let url = `http://127.0.0.1:8888/api/v1/getCommunity?name=${user?.username}`;
+    httpGetAsync(url, (res: string) => {
+      let json = JSON.parse(res);
+      console.log(json)
+      if (json.err) {
+          setHasCommunity(false)
+      }
+    });
+  }
+
   function getHistory() {
     let url = `http://127.0.0.1:8888/api/v1/getHistory?name=${user?.username}`;
     httpGetAsync(url, (res: string) => {
@@ -67,6 +80,7 @@ export function Left() {
   useEffect(() => {
     getStats();
     getHistory();
+    getCommunity();
   }, []);
 
   useEffect(() => {
@@ -167,7 +181,7 @@ export function Left() {
         </div>
 
         <div style={{marginTop: 10, padding: "10px 10px 10px 0", width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-            <button style={{color: 'white'}} className="border border-solid border-gray-100 mt-3 p-3 pl-5 pr-5 rounded-md font-bold" onClick={() => navigate("/community")}>Your Community</button>
+            <button style={{color: 'white'}} className="border border-solid border-gray-100 mt-3 p-3 pl-5 pr-5 rounded-md font-bold" onClick={() => navigate(hasCommunity ? "/community" : "/communityAdd")}>Your Community</button>
         </div>
 
       </div>

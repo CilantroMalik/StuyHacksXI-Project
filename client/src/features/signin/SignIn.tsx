@@ -71,7 +71,7 @@ export function SignIn() {
   }
 
   return (
-    <div style={pageStyles}>
+    <div className="bg-no-repeat bg-cover" style={pageStyles}>
       <div style={cardStyle}>
         <div className="flex flex-row items-center w-full">
           <form className="flex flex-col m-3 items-start w-full" onSubmit={submit}>
