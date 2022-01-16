@@ -37,7 +37,7 @@ export function AddBook() {
     }
 
     return (
-        <div className="bg-no-repeat bg-auto bg-center" style={{width: "100vw", height: "100vh", backgroundImage: `url(/images/bgs/addBook.png)`}}>
+        <div className="bg-no-repeat bg-auto bg-center bg-cover" style={{width: "100vw", height: "100vh", backgroundImage: `url(/images/bgs/addBook.png)`}}>
             <div className="flex flex-col justify-center content-center items-center">
                 <div style={{width:"10rem", height: "14rem", backgroundImage: colorMap[cover-1]}} className="m-10 bg-no-repeat bg-cover"></div>
                 <div className="flex flex-row justify-center content-center items-center mb-12">

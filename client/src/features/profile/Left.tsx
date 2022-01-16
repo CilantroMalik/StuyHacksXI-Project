@@ -3,6 +3,7 @@ import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { setUser, selectUser, selectUserBooks, selectUserHistory, setUserHistory } from '../user/userSlice';
 import { useNavigate } from 'react-router';
 import { httpGetAsync } from '../../utils';
+import { BookDetailModal } from '../bookDetailModal/BookDetailModal';
 
 export function Left() {
   let navigate = useNavigate();
@@ -13,7 +14,8 @@ export function Left() {
   let [stats, setStats]: any = useState(null);
   let [topHistory, setTopHistory]: any = useState(null);
   let [noHistory, setNoHistory]: any = useState(false);
-  let [hasCommunity, setHasCommunity]: any = useState(true)
+  let [hasCommunity, setHasCommunity]: any = useState(true);
+  let [selectedBook, setSelectedBook]: any = useState(null);
 
   const colorMap = ["url(/images/covers/red.png)", "url(/images/covers/yellow.png)", "url(/images/covers/green.png)", "url(/images/covers/gray.png)"]
   const historyTemplate = [[{id: 1}, {id: 2}, {id: 3}, {id: 4}], [{id: 5}, {id: 6}, {id: 7}]];
@@ -143,7 +145,10 @@ export function Left() {
               <div style={rowStyles}> { topHistory[0].map((obj: any) => {
                   return (
                     <div key={obj.id} className={`bg-no-repeat bg-cover bg-center rounded-lg m-2 ${obj.cover_id ? "" : "opacity-50"}`}
-                      style={{backgroundColor: (obj.cover_id ? "" : "#f1f7ed"), minWidth:"6rem", maxWidth:"6rem", height: "8rem", backgroundImage:colorMap[obj.cover_id-1]}}>
+                      style={{backgroundColor: (obj.cover_id ? "" : "#f1f7ed"), minWidth:"6rem", maxWidth:"6rem", height: "8rem", backgroundImage:colorMap[obj.cover_id-1]}}
+                      onClick={() => {
+                        if (obj.cover_id) setSelectedBook(obj);
+                      }}>
                     </div>
                   )
                 })}
@@ -178,12 +183,33 @@ export function Left() {
                 <div className="flex flex-col justify-center align-center column-center text-center hover:cursor-pointer rounded-lg m-2 opacity-50" style={{backgroundColor: "#f1f7ed", minWidth:"6rem", maxWidth:"6rem", height: "8rem"}}> See All Completed Books</div>
               </div>
             </>)}
+
           </div>
         </div>
 
         <div style={{marginTop: 10, padding: "10px 10px 10px 0", width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
             <button style={{color: 'white'}} className="border border-solid border-gray-100 mt-3 p-3 pl-5 pr-5 rounded-md font-bold" onClick={() => navigate(hasCommunity ? "/community" : "/communityAdd")}>Your Community</button>
         </div>
+        
+        { selectedBook && <div className="flex flex-row bg-themeBlue justify-center align-center content-center text-center rounded-2xl p-4" style={{
+              zIndex: 9999,
+              width: "30vw",
+              height: "30vh",
+              position: "absolute",
+              marginLeft: "35vw",
+              marginTop: "20vh",
+          }}>
+          <div className="bg-no-repeat bg-center bg-cover" style={{backgroundImage:colorMap[selectedBook.cover_id-1], minWidth:"14rem", maxWidth:"14rem", height: "100%"}}></div>
+          <div className="w-full h-full flex-col justify-space-between align-center content-center text-center bg-themeBlue rounded-lg">
+            <h1 className="w-full text-3xl font-bold text-center text-themeSepia my-3">
+              {selectedBook.title}
+            </h1>
+            <h1 className="w-full text-xl font-bold text-center text-themeSepia">
+              {selectedBook.author}
+            </h1>
+            <button className="border border-solid border-themeSepia rounded-lg px-4 py-2 mx-4 my-6 text-themeSepia" onClick={() => setSelectedBook(null)}>Close</button>
+          </div>
+        </div> }
 
       </div>
   );
