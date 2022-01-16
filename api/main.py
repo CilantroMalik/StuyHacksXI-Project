@@ -172,12 +172,10 @@ def removeBook():
 @cross_origin()
 def getCollection():
     with open("./books.json", mode='r') as bookFile:
-        try:
-            content = "".join(bookFile.readlines())
-            books = json.loads(content)
-        except json.JSONDecodeError:
-            return jsonify({"err": "Empty collection!"})
-
+        content = "".join(bookFile.readlines())
+    if '"' + request.args.get("name") + '":' not in content:
+        return jsonify({"err": "Empty collection!"})
+    books = json.loads(content)
     return jsonify(books[request.args.get("name")])
 
 # Gets the history of a user
