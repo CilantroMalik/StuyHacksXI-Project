@@ -183,7 +183,8 @@ def getHistory():
     with open("./books.json", mode='r') as bookFile:
         content = "".join(bookFile.readlines())
     if a.get("name") not in content:
-        return jsonify({"err": "User has no book record."})
+        name = a.get("name")
+        return jsonify({"err": f"User {name} has no book record."})
     books = json.loads(content)
     if "history" not in list(books[a.get("name")].keys()):
         return jsonify({"err": "User has no history."})

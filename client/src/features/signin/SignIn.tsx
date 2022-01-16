@@ -53,7 +53,7 @@ export function SignIn() {
       let json = JSON.parse(res);
       let name = json.name;
       
-      if (json.err && json.err.indexOf("alread logged in") !== -1) {
+      if (json.err && json.err.indexOf("alread logged in") === -1) {
         console.error(json.err);
         setErrorMessage(json.err);
       } else {
