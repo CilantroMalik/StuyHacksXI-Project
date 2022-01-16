@@ -112,7 +112,7 @@ export function Left({user}: {user: string}) {
                     Books Recommended
                 </h1>
                 <h1 className="text-xl font-bold mr-0" style={{color: "#f1f7ed", textAlign: 'right'}}>
-                    {12}
+                    {0}
                 </h1>
             </div>
 
