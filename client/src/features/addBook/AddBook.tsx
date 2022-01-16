@@ -23,8 +23,7 @@ export function AddBook() {
         let pages = encodeURI(e.target.pages.value)
         console.log(title, author, pages)
 
-        // @ts-ignore
-        let url = `http://127.0.0.1:8888/api/v1/newBook?name=${user.username}&title=${title}&author=${author}&pages=${pages}`
+        let url = `http://127.0.0.1:8888/api/v1/newBook?name=${user?.username}&title=${title}&author=${author}&pages=${pages}`
 
         httpGetAsync(url, (res: string) => {
             let json = JSON.parse(res);
@@ -43,9 +42,9 @@ export function AddBook() {
     }
 
     return (
-        <div style={{width: "100vw", height: "100vh"}} className="bg-blue-300">
+        <div style={{width: "100vw", height: "100vh"}} className="bg-themeBlue">
             <div className="flex flex-col justify-center content-center items-center">
-                <div style={{width: "10vw", height: "30vh"}} className={`m-10 bg-${colorMap[cover-1]}`}></div>
+                <div style={{width: "10vw", height: "25vh"}} className={`m-10 bg-${colorMap[cover-1]}`}></div>
                 <div className="flex flex-row justify-center content-center items-center">
                     <button className="m-5 w-20 h-20 bg-themeRed rounded-lg" onClick={() => setCover(1)}></button>
                     <button className="m-5 w-20 h-20 bg-themeYellow rounded-lg" onClick={() => setCover(2)}></button>
@@ -53,15 +52,21 @@ export function AddBook() {
                     <button className="m-5 w-20 h-20 bg-themeGray rounded-lg" onClick={() => setCover(4)}></button>
                 </div>
                 <form className="w-1/3 flex flex-col justify-center content-center items-center" onSubmit={submit}>
-                    <h1 className="mt-5 text-4xl font-bold">Book Title</h1>
-                    <input id="title" className="mt-6 mb-6 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md py-2 pl-1.5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" style={{backgroundColor: "#e6f0e3"}} placeholder="Enter title of book" type="text"/>
-                    <h3 className=" mt-5 text-2xl font-semibold">Author</h3>
-                    <input id="author" className="mt-6 mb-6 placeholder:italic placeholder:text-slate-400 block w-1/2 border border-slate-300 rounded-md py-2 pl-1.5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" style={{backgroundColor: "#e6f0e3"}} placeholder="Enter author of book" type="text"/>
-                    <h2 className="mt-5 text-3xl font-semibold">Pages</h2>
-                    <input id="pages" className="mt-6 mb-6 placeholder:italic placeholder:text-slate-400 block w-1/3 border border-slate-300 rounded-md py-2 pl-1.5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" style={{backgroundColor: "#e6f0e3"}} placeholder="Enter total # of pages" type="number"/>
-                    <button className="border border-solid border-gray-600 mt-3 p-1.5 pl-5 pr-5 rounded-md hover:bg-gray-100 font-bold" type="submit">Add book</button>
+                    <div className="flex flex-row justify-between align-center place-content-center w-full">
+                      <h1 className="mt-5 text-2xl font-bold text-themeSepia mr-4">Title</h1>
+                      <input id="title" className="mt-6 mb-6 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md py-2 pl-1.5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" style={{backgroundColor: "#e6f0e3"}} placeholder="Enter title of book" type="text"/>
+                    </div>
+                    <div className="flex flex-row justify-between align-center place-content-center w-full">
+                      <h3 className=" mt-5 text-2xl font-semibold mr-4 text-themeSepia">Author</h3>
+                      <input id="author" className="mt-6 mb-6 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md py-2 pl-1.5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" style={{backgroundColor: "#e6f0e3"}} placeholder="Enter author of book" type="text"/>
+                    </div>
+                    <div className="flex flex-row justify-between align-center place-content-center w-full">
+                      <h2 className="mt-5 text-2xl font-semibold mr-4 text-themeSepia">Pages</h2>
+                      <input id="pages" className="mt-6 mb-6 placeholder:italic placeholder:text-slate-400 block w-full border border-slate-300 rounded-md py-2 pl-1.5 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" style={{backgroundColor: "#e6f0e3"}} placeholder="Enter total # of pages" type="number"/>
+                    </div>
+                    <button className="border border-solid border-gray-600 mt-3 p-1.5 pl-5 pr-5 rounded-md font-bold text-themeSepia" type="submit">Add book</button>
                 </form>
             </div>
         </div>
-    )
+    );
 }
