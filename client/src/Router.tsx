@@ -10,6 +10,9 @@ import { useAppSelector, useAppDispatch } from './app/hooks';
 import { setUser, selectUser } from './features/user/userSlice';
 import { useNavigate } from 'react-router';
 import { LandingPage } from './features/landingPage/landingPage';
+import { CommunityHome } from "./features/communityHome/CommunityHome";
+import { OtherProfile } from "./features/otherProfile/OtherProfile";
+import { OtherView } from "./features/otherVIew/OtherView";
 
 function ResetState() {
   let dispatch = useAppDispatch();
@@ -58,6 +61,9 @@ function Router() {
       <Route path="/home" element={<Profile />}/>
       <Route path="/addBook" element={<AddBook />}/>
       <Route path="/editBook" element={<EditBook />}/>
+      <Route path="/community" element={<CommunityHome />}/>
+      <Route path="/otherView" element={<OtherView />}/>
+      <Route path="/otherProfile" element={<OtherProfile />}/>
     </Routes>
   );
 }
